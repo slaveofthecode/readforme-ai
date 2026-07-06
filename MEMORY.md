@@ -48,4 +48,4 @@ src/
 - [x] Program the central nervous system (`AGENT.md`)
 - [x] Configure execution verification protocols (`.harness/commands/`)
 - [x] Establish coding quality standards and constraints (`.harness/skills/`)
-- [ ] Define atomic sub-agent behavior profiles (`.harness/agents/`)
+- [x] Define atomic sub-agent behavior profiles (`.harness/agents/`)
