@@ -1,14 +1,16 @@
 # COMMAND: CODE LINTING & FORMATTING
 
-## Tooling
+## 1. Tooling & Ecosystem
 
-- Eslint & Prettier via Bun
+- **Linter & Formatter:** ESLint + Prettier (executed via Bun)
 
-## Execution Command
+## 2. Terminal Commands
 
-- `bun run lint` / `bun run format`
+- **Check only:** `bun run lint`
+- **Auto-fix styles:** `bun run lint:fix` (or `bun x eslint --fix`)
 
-## Protocol
+## 3. Protocol & Trigger Conditions
 
-- When to run:
-- Expected outcome:
+- **User Trigger:** Can be manually executed anytime inside the chat using the `/lint` shortcut.
+- **AI Trigger:** The AI MUST suggest or run `bun run lint:fix` right after creating or modifying any visual UI component or refactoring a file.
+- **Expected Outcome:** The command must finish with exit code 0. If code styling errors appear in the terminal output, the AI must fix them before delivering the task.

@@ -46,6 +46,6 @@ src/
 - [x] Create core structure and directory layout (`.harness/`)
 - [x] Configure global state management contract (`MEMORY.md`)
 - [x] Program the central nervous system (`AGENT.md`)
-- [ ] Configure execution verification protocols (`.harness/commands/`)
+- [x] Configure execution verification protocols (`.harness/commands/`)
 - [ ] Establish coding quality standards and constraints (`.harness/skills/`)
 - [ ] Define atomic sub-agent behavior profiles (`.harness/agents/`)

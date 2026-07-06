@@ -1,14 +1,15 @@
 # COMMAND: TYPE CHECKING
 
-## Tooling
+## 1. Tooling & Ecosystem
 
-- TypeScript Compiler (tsc)
+- **Compiler:** TypeScript Compiler (`tsc`) executing natively inside Bun environment.
 
-## Execution Command
+## 2. Terminal Command
 
-- `bun x tsc --noEmit`
+- **Verification:** `bun x tsc --noEmit`
 
-## Protocol
+## 3. Protocol & Trigger Conditions
 
-- When to run:
-- Expected outcome:
+- **User Trigger:** Can be manually executed anytime inside the chat using the `/type-check` shortcut.
+- **AI Trigger:** This protocol is MANDATORY. The AI is NOT allowed to consider a coding task complete until `bun x tsc --noEmit` has been executed and returns ZERO errors.
+- **Error Handling:** If this command outputs compilation or type errors, the AI must automatically adopt the `@architect` or `@frontend-logic` mindset to resolve the type definitions immediately.
