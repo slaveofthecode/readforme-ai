@@ -55,3 +55,37 @@ Updates current goals                Invokes atomic expert                Enforc
                                   [.harness/commands/*]
                                   Runs linter, tsc, & tests
 ```
+
+## 🗂️ Detailed Harness Reference
+
+Here is the technical breakdown of every control script and rule-set governing this repository.
+
+### 🎛️ Verification Protocols (`.harness/commands/`)
+
+These are the technical checkpoints that both you (via `/` shortcuts) and the AI (via terminal execution) use to validate code before pushing to branches.
+
+- **`lint.md` (Code Style & Formatting):**
+  - **Purpose:** Ensures the codebase remains visually clean and matches formatting rules.
+  - **Under the Hood:** Runs ESLint and Prettier via Bun using `bun run lint` or `bun run lint:fix`.
+  - **When it triggers:** Every time UI components are modified or large refactors take place.
+- **`type-check.md` (Strict Type Validation):**
+  - **Purpose:** The ultimate guardian against type errors. It prevents compilation issues in production.
+  - **Under the Hood:** Invokes the TypeScript compiler in verification mode using `bun x tsc --noEmit`.
+  - **When it triggers:** Mandatory execution before any task is considered complete. If it outputs errors, they must be fixed instantly.
+- **`test.md` (Unit Testing Execution):**
+  - **Purpose:** Guarantees that business logic, custom hooks, and utilities work exactly as intended.
+  - **Under the Hood:** Executes Bun's lightning-fast native test runner via `bun test`.
+  - **When it triggers:** Runs whenever logic, calculations, data states, or service APIs are altered. A failing test completely blocks task delivery.
+
+---
+
+### 📜 Architectural Guardrails (`.harness/skills/`)
+
+These are behavioral laws that shape the AI's intelligence. They don't run console commands; instead, they inject senior engineering constraints into the AI's mindset.
+
+- **`atomic-ui.md` (UI Purity & Responsive Standards):**
+  - **Purpose:** Enforces clean interfaces and a rigid user-experience approach.
+  - **Rules:** Forces a strict **Mobile-First** coding flow using Tailwind CSS responsive prefixes (`md:`, `lg:`). It also mandates that all shared components remain pure (zero hardcoded business logic or API calls inside visual layers).
+- **`clean-code.md` (Quality & Code Governance):**
+  - **Purpose:** Prevents bad coding shortcuts and enforces industry standards.
+  - **Rules:** Completely FORBIDS the use of `any` in TypeScript, enforces the Single Responsibility Principle (functions under 40 lines), requires strict error handling (`try/catch`), and explicitly bans empty placeholders or code stubs (`// TODO`).

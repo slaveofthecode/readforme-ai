@@ -1,32 +1,15 @@
----
-
-## 2. Populating `.harness/skills/clean-code.md` (Restrictions & Rules)
-
-This file sets the behavioral boundaries, programming restrictions, and testing expectations for the AI. It stops the AI from taking lazy shortcuts.
-
-Open `.harness/skills/clean-code.md` and add the following:
-
-```markdown
 # SKILL: CODE QUALITY & ARCHITECTURAL RESTRICTIONS
 
-## 1. Coding Style & Rules
+## 1. Strict Type-Safety
 
-- **Type Safety:** Explicitly type all variables, function parameters, and return types. The use of `any` is strictly FORBIDDEN. Use `unknown` or generics if dynamic typing is required.
-- **Component Architecture:** Prefer functional components with explicit React interfaces for props: `interface Props {}`.
-- **Pure Presentation:** UI components must remain pure. Do not hardcode API calls, business logic, or global state triggers inside `src/components/`. Use custom hooks or context injection.
-- **Immutability:** State changes must always be immutable. Do not mutate objects or arrays directly.
+- **No Any Allowed:** The use of `any` is strictly FORBIDDEN in this codebase. If a type is unknown or dynamic, utilize generics (`<T>`), explicit unions, or `unknown`.
+- **Contract Enforcement:** Every function parameter, object structure, and API response payload must have an explicitly declared TypeScript type or interface.
 
-## 2. Permissions & AI Boundaries
+## 2. Refactoring & Modular Rules
 
-- **Destructive Changes:** The AI is NOT allowed to delete or refactor core architectural files without explicit user consent.
-- **Package Installation:** The AI cannot install external npm/bun packages autonomously. If a library is needed, it must suggest it to the user first.
-- **Stubbing / Placeholders:** NEVER write placeholder code like `// TODO: Implement later` or leave functions empty. All generated code must be fully functional and ready for production.
+- **Single Responsibility Principle (SRP):** Functions and hooks must perform exactly one action. If a function or component extends past 30-40 lines of execution logic, it must be modularized or broken down into sub-utilities.
+- **Error Handling Guard:** All asynchronous processes, storage mutations, or API calls must be wrapped in strict `try/catch` blocks with explicit error logging or safe user feedback fallbacks.
 
-## 3. Definition of Done (DoD)
+## 3. Production Readiness (No Stubs)
 
-A task is only considered complete by the AI when:
-
-1. The code compiles without TypeScript warnings (`bun x tsc --noEmit` passes).
-2. Code matches the exact naming conventions defined in `MEMORY.md`.
-3. Basic unit tests are created or updated using Bun's native test runner if logic was introduced.
-```
+- **Completeness:** The AI must NEVER output placeholders, code stubs, or comments like `// TODO: Implement later`. All logic generated must be fully production-ready, logical, and operational.
