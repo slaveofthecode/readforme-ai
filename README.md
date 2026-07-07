@@ -2,9 +2,38 @@
 
 This repository is equipped with a professional, platform-agnostic **AI Engineering Harness**. Instead of relying on passive AI chats, this project uses an automated context-engineering architecture that governs code quality, enforces architectural standards, and guides AI agents deterministically.
 
+The harness is designed to be **tool-agnostic** — it works identically across Cursor, OpenCode, Claude Code, Copilot, or any other AI coding assistant.
+
 ---
 
-## 🛠️ Harness Architecture: How It Works
+## Entry Points by AI Tool
+
+Each AI tool requires a specific file or configuration to discover this harness. All of them reference the same canonical source of truth (`.harness/`), ensuring identical behavior regardless of which tool you use.
+
+### OpenCode
+
+- **Config file:** `opencode.json`
+- **Rules file:** `AGENTS.md`
+- **How it works:** OpenCode loads `AGENTS.md` as project rules automatically. The `opencode.json` includes all `.harness/` files via the `instructions` property, giving the agent full access to the harness.
+
+### Cursor
+
+- **Config file:** `.cursorrules`
+- **How it works:** Cursor reads `.cursorrules` automatically on startup. This file instructs it to read `AGENTS.md` and the entire `.harness/` directory to apply governance rules.
+
+### Claude Code (Anthropic)
+
+- **Config file:** `CLAUDE.md`
+- **How it works:** Claude Code detects `CLAUDE.md` at the project root and uses it as a system prompt. This file instructs it to read `AGENTS.md` and `.harness/` to follow the same protocol as other tools.
+
+### Any other tool
+
+- **Config file:** `AGENTS.md`
+- **How it works:** `AGENTS.md` is plain markdown with no tool-specific dependencies. Simply configure your AI tool to read it as the initial instruction set.
+
+---
+
+## Harness Architecture: How It Works
 
 The harness is divided into five modular pillars located inside the root and the `.harness/` directory. Each component has a strict, unique responsibility:
 
@@ -13,10 +42,10 @@ The harness is divided into five modular pillars located inside the root and the
 - **What it is:** The short and long-term memory of the repository.
 - **How it's used:** Every time a new session starts, the AI indexes this file. It instantly learns the exact tech stack (Bun, React, Tailwind, Shadcn), the feature-driven directory structure, and the active roadmap. It prevents the AI from losing context during long development cycles.
 
-### 2. Central Nervous System (`AGENT.md`)
+### 2. Central Nervous System (`AGENTS.md`)
 
 - **What it is:** The Lead Architect and Main Orchestrator.
-- **How it's used:** This is the entry point for all AI interactions (via Cursor or OpenCode CLI). You always talk to `AGENT.md`. It processes your request, checks the current project memory, adopts the required specialized mindset, and enforces quality constraints before writing code.
+- **How it's used:** This is the entry point for all AI interactions. You always talk to `AGENTS.md`. It processes your request, checks the current project memory, adopts the required specialized mindset, and enforces quality constraints before writing code.
 
 ### 3. Execution Verification Protocols (`.harness/commands/`)
 
@@ -31,38 +60,40 @@ The harness is divided into five modular pillars located inside the root and the
 ### 5. Atomic Specialized Sub-Agents (`.harness/agents/`)
 
 - **What they are:** Hyper-focused contextual profiles.
-- **How they're used:** Complex tasks are broken down into atomic steps. The orchestrator delegates responsibilities to specific sub-agents (`architect`, `ui-expert`, `frontend-logic`, `tester`). Isolating roles inside small markdown files optimizes the AI's context window and drastically reduces hallucinations.
+- **How they're used:** Complex tasks are broken down into atomic steps. The orchestrator delegates responsibilities to specific sub-agents (`architect`, `ui-expert`, `frontend`, `tester`). Isolating roles inside small markdown files optimizes the AI's context window and drastically reduces hallucinations.
 
 ---
 
-## 🚀 Standard Workflow Lifecycle
+## Standard Workflow Lifecycle
 
 ```text
-[User Request] ──> Read Implicitly ──> [AGENT.md] (Orchestrator)
-                                            │
-       ┌────────────────────────────────────┼────────────────────────────────────┐
-       ▼                                    ▼                                    ▼
-1. Sync State                        2. Delegate Task                     3. Apply Restrictions
-[MEMORY.md]                          [.harness/agents/*]                  [.harness/skills/*]
-Updates current goals                Invokes atomic expert                Enforces clean code
-       │                                    │                                    │
-       └────────────────────────────────────┼────────────────────────────────────┘
-                                            ▼
-                                 [Generate Clean Code]
-                                            │
-                                            ▼
-                                  4. Verify Execution
-                                  [.harness/commands/*]
-                                  Runs linter, tsc, & tests
+[User Request] ---> Read Implicitly ---> [AGENTS.md] (Orchestrator)
+                                              │
+       ┌──────────────────────────────────────┼──────────────────────────────────────┐
+       ▼                                      ▼                                      ▼
+1. Sync State                          2. Delegate Task                       3. Apply Restrictions
+[MEMORY.md]                            [.harness/agents/*]                    [.harness/skills/*]
+Updates current goals                  Invokes atomic expert                  Enforces clean code
+       │                                      │                                      │
+       └──────────────────────────────────────┼──────────────────────────────────────┘
+                                              ▼
+                                   [Generate Clean Code]
+                                              │
+                                              ▼
+                                    4. Verify Execution
+                                    [.harness/commands/*]
+                                    Runs linter, tsc, & tests
 ```
 
-## 🗂️ Detailed Harness Reference
+---
+
+## Detailed Harness Reference
 
 Here is the technical breakdown of every control script and rule-set governing this repository.
 
-### 🎛️ Verification Protocols (`.harness/commands/`)
+### Verification Protocols (`.harness/commands/`)
 
-These are the technical checkpoints that both you (via `/` shortcuts) and the AI (via terminal execution) use to validate code before pushing to branches.
+These are the technical checkpoints that both you (via shortcuts) and the AI (via terminal execution) use to validate code before pushing to branches.
 
 - **`lint.md` (Code Style & Formatting):**
   - **Purpose:** Ensures the codebase remains visually clean and matches formatting rules.
@@ -79,7 +110,7 @@ These are the technical checkpoints that both you (via `/` shortcuts) and the AI
 
 ---
 
-### 📜 Architectural Guardrails (`.harness/skills/`)
+### Architectural Guardrails (`.harness/skills/`)
 
 These are behavioral laws that shape the AI's intelligence. They don't run console commands; instead, they inject senior engineering constraints into the AI's mindset.
 
@@ -89,3 +120,16 @@ These are behavioral laws that shape the AI's intelligence. They don't run conso
 - **`clean-code.md` (Quality & Code Governance):**
   - **Purpose:** Prevents bad coding shortcuts and enforces industry standards.
   - **Rules:** Completely FORBIDS the use of `any` in TypeScript, enforces the Single Responsibility Principle (functions under 40 lines), requires strict error handling (`try/catch`), and explicitly bans empty placeholders or code stubs (`// TODO`).
+
+---
+
+<!--
+## Quick Start
+
+To use this harness in a new project:
+
+1. Copy `.harness/`, `AGENTS.md`, `MEMORY.md`, and the relevant entry point file for your AI tool (`.cursorrules`, `CLAUDE.md`, or `opencode.json`).
+2. Update `MEMORY.md` with your project's tech stack and conventions.
+3. Start your AI coding session. The agent will read `AGENTS.md` and automatically follow the governance rules.
+
+No configuration needed beyond what is already in these files. -->

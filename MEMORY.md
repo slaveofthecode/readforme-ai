@@ -45,7 +45,14 @@ src/
 
 - [x] Create core structure and directory layout (`.harness/`)
 - [x] Configure global state management contract (`MEMORY.md`)
-- [x] Program the central nervous system (`AGENT.md`)
+-   [x] Program the central nervous system (`AGENTS.md`)
 - [x] Configure execution verification protocols (`.harness/commands/`)
 - [x] Establish coding quality standards and constraints (`.harness/skills/`)
 - [x] Define atomic sub-agent behavior profiles (`.harness/agents/`)
+
+### Harness Entry Points (Tool-Agnostic)
+
+- [x] Create main orchestrator (`AGENTS.md`) — tool-agnostic system prompt
+- [x] Configure Cursor entry point (`.cursorrules`) — references AGENTS.md + .harness/
+- [x] Create Claude Code entry point (`CLAUDE.md`) — references AGENTS.md + .harness/
+- [x] Create OpenCode entry point (`opencode.json`) — references AGENTS.md + .harness/ via instructions

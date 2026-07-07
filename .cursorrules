@@ -1,2 +1,5 @@
-Automatically, strictly, and with top priority, follow the role, protocol, and behavior instructions defined in the /AGENT.md file located in the project root. 
-Do not ignore that file under any circumstances.
+Automatically, strictly, and with top priority, follow the role, protocol, and behavior instructions defined in the /AGENTS.md file located in the project root.
+
+Then, read and apply all relevant files from /.harness/agents/, /.harness/skills/, and /.harness/commands/ as appropriate for each task.
+
+Do not ignore these files under any circumstances.
