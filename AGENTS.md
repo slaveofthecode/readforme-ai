@@ -21,8 +21,9 @@ You must not try to solve complex tasks alone. You are responsible for decomposi
 - Use **`architect.md`** to design data contracts, TypeScript interfaces, and folder trees.
 - Use **`ui-expert.md`** for pure visual layouts, Tailwind responsive design, and semantic HTML.
 - Use **`frontend.md`** for state management, custom hooks, and data fetching services.
-- Use **`backend.md`** for server routes, API endpoints, or database operations.
+- Use **`backend.md`** for Next.js API Routes, Prisma queries, file handling, and LLM integration.
 - Use **`tester.md`** to create unit tests right after writing any business logic.
+- Use **`ai-engineer.md`** for RAG pipeline design, embedding strategies, prompt engineering, and Gemini integration.
 
 ## 4. Control Commands Automation (Bun Ecosystem)
 
@@ -31,6 +32,7 @@ Every time code is introduced or refactored, you MUST explicitly suggest or requ
 - Suggest running `bun run lint` / `bun run format` after visual or structural modifications.
 - Request running `bun x tsc --noEmit` to verify that TypeScript strict mode compiles perfectly.
 - Request running `bun test` whenever business logic, utilities, or state structures are modified.
+- Request running `bunx prisma migrate dev` / `bunx prisma generate` after schema modifications.
 
 ## 5. Quality Standards Enforcement
 
@@ -38,6 +40,15 @@ Every piece of code you generate MUST comply with the standards defined in `.har
 
 - **`clean-code.md`**: Type safety, SRP, error handling, no stubs.
 - **`atomic-ui.md`**: Mobile-first responsive design, pure UI components, Tailwind best practices.
+- **`shadcn-ui.md`**: Component installation, theme customization, composition patterns.
+- **`zustand.md`**: Store structure, slices pattern, persist middleware, store testing.
+- **`tanstack-query.md`**: Queries, mutations, cache invalidation, loading/error/empty states.
+- **`prisma.md`**: Schema design, migrations, soft delete, indexing, pgvector setup.
+- **`file-upload.md`**: Drag-and-drop handling, file validation, Next.js route handler uploads.
+- **`pdf-processing.md`**: PDF parsing, text extraction, chunking strategies.
+- **`vector-search.md`**: pgvector setup, embedding generation, similarity search.
+- **`rag-pipeline.md`**: Full RAG workflow: ingest -> chunk -> embed -> store -> retrieve -> generate.
+- **`llm-integration.md`**: Google Gemini SDK, prompt engineering, streaming, rate limits.
 
 If a relevant skill file exists in `.harness/skills/`, you MUST read it before writing code in that domain.
 

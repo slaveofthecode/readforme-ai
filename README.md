@@ -6,6 +6,27 @@ The harness is designed to be **tool-agnostic** — it works identically across 
 
 ---
 
+## Stack
+
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js (App Router) |
+| **Runtime** | Bun |
+| **Language** | TypeScript (Strict Mode) |
+| **Frontend** | React |
+| **Styling** | Tailwind CSS |
+| **UI Components** | Shadcn/ui |
+| **State Management** | Zustand (UI state) |
+| **Data Fetching** | TanStack Query (server state) |
+| **ORM** | Prisma |
+| **Database** | PostgreSQL + pgvector |
+| **LLM** | Google Gemini (free tier) |
+| **API Layer** | Next.js API Routes (REST) |
+| **Testing** | Bun Test (`bun:test`) |
+| **Linting** | ESLint + Prettier |
+
+---
+
 ## Entry Points by AI Tool
 
 Each AI tool requires a specific file or configuration to discover this harness. All of them reference the same canonical source of truth (`.harness/`), ensuring identical behavior regardless of which tool you use.
@@ -40,7 +61,7 @@ The harness is divided into five modular pillars located inside the root and the
 ### 1. Continuous Project State (`MEMORY.md`)
 
 - **What it is:** The short and long-term memory of the repository.
-- **How it's used:** Every time a new session starts, the AI indexes this file. It instantly learns the exact tech stack (Bun, React, Tailwind, Shadcn), the feature-driven directory structure, and the active roadmap. It prevents the AI from losing context during long development cycles.
+- **How it's used:** Every time a new session starts, the AI indexes this file. It instantly learns the exact tech stack, the feature-driven directory structure, and the active roadmap. It prevents the AI from losing context during long development cycles.
 
 ### 2. Central Nervous System (`AGENTS.md`)
 
@@ -60,7 +81,7 @@ The harness is divided into five modular pillars located inside the root and the
 ### 5. Atomic Specialized Sub-Agents (`.harness/agents/`)
 
 - **What they are:** Hyper-focused contextual profiles.
-- **How they're used:** Complex tasks are broken down into atomic steps. The orchestrator delegates responsibilities to specific sub-agents (`architect`, `ui-expert`, `frontend`, `tester`). Isolating roles inside small markdown files optimizes the AI's context window and drastically reduces hallucinations.
+- **How they're used:** Complex tasks are broken down into atomic steps. The orchestrator delegates responsibilities to specific sub-agents (`architect`, `ui-expert`, `frontend`, `backend`, `tester`, `ai-engineer`). Isolating roles inside small markdown files optimizes the AI's context window and drastically reduces hallucinations.
 
 ---
 
@@ -73,7 +94,7 @@ The harness is divided into five modular pillars located inside the root and the
        ▼                                      ▼                                      ▼
 1. Sync State                          2. Delegate Task                       3. Apply Restrictions
 [MEMORY.md]                            [.harness/agents/*]                    [.harness/skills/*]
-Updates current goals                  Invokes atomic expert                  Enforces clean code
+Updates current goals                  Invokes atomic expert                  Enforces quality rules
        │                                      │                                      │
        └──────────────────────────────────────┼──────────────────────────────────────┘
                                               ▼
@@ -82,14 +103,12 @@ Updates current goals                  Invokes atomic expert                  En
                                               ▼
                                     4. Verify Execution
                                     [.harness/commands/*]
-                                    Runs linter, tsc, & tests
+                                    Runs linter, tsc, tests, db checks
 ```
 
 ---
 
 ## Detailed Harness Reference
-
-Here is the technical breakdown of every control script and rule-set governing this repository.
 
 ### Verification Protocols (`.harness/commands/`)
 
@@ -102,11 +121,15 @@ These are the technical checkpoints that both you (via shortcuts) and the AI (vi
 - **`type-check.md` (Strict Type Validation):**
   - **Purpose:** The ultimate guardian against type errors. It prevents compilation issues in production.
   - **Under the Hood:** Invokes the TypeScript compiler in verification mode using `bun x tsc --noEmit`.
-  - **When it triggers:** Mandatory execution before any task is considered complete. If it outputs errors, they must be fixed instantly.
+  - **When it triggers:** Mandatory execution before any task is considered complete.
 - **`test.md` (Unit Testing Execution):**
   - **Purpose:** Guarantees that business logic, custom hooks, and utilities work exactly as intended.
-  - **Under the Hood:** Executes Bun's lightning-fast native test runner via `bun test`.
+  - **Under the Hood:** Executes Bun's native test runner via `bun test`.
   - **When it triggers:** Runs whenever logic, calculations, data states, or service APIs are altered. A failing test completely blocks task delivery.
+- **`db.md` (Database Operations):**
+  - **Purpose:** Manages Prisma schema changes, migrations, and client generation.
+  - **Under the Hood:** Executes `bunx prisma migrate dev`, `bunx prisma generate`.
+  - **When it triggers:** After any modification to the Prisma schema.
 
 ---
 
@@ -114,22 +137,72 @@ These are the technical checkpoints that both you (via shortcuts) and the AI (vi
 
 These are behavioral laws that shape the AI's intelligence. They don't run console commands; instead, they inject senior engineering constraints into the AI's mindset.
 
+#### Core (always active)
+
+- **`clean-code.md` (Type Safety & Code Quality):**
+  - **Rules:** Completely FORBIDS `any`, enforces Single Responsibility Principle (functions under 40 lines), requires strict `try/catch` error handling, bans code stubs.
 - **`atomic-ui.md` (UI Purity & Responsive Standards):**
-  - **Purpose:** Enforces clean interfaces and a rigid user-experience approach.
-  - **Rules:** Forces a strict **Mobile-First** coding flow using Tailwind CSS responsive prefixes (`md:`, `lg:`). It also mandates that all shared components remain pure (zero hardcoded business logic or API calls inside visual layers).
-- **`clean-code.md` (Quality & Code Governance):**
-  - **Purpose:** Prevents bad coding shortcuts and enforces industry standards.
-  - **Rules:** Completely FORBIDS the use of `any` in TypeScript, enforces the Single Responsibility Principle (functions under 40 lines), requires strict error handling (`try/catch`), and explicitly bans empty placeholders or code stubs (`// TODO`).
+  - **Rules:** Forces strict **Mobile-First** coding with Tailwind responsive prefixes (`md:`, `lg:`). Shared components must remain pure (no business logic or API calls).
+
+#### Domain-specific (load on demand)
+
+- **`shadcn-ui.md`:** Component installation, theme customization, `cn()` utility usage, composition patterns.
+- **`zustand.md`:** Store structure, slices pattern, persist middleware, store testing.
+- **`tanstack-query.md`:** Queries, mutations, cache invalidation, loading/error/empty states, infinite queries.
+- **`prisma.md`:** Schema design, migrations, soft delete, indexing, connection pooling, pgvector setup.
+- **`file-upload.md`:** Drag-and-drop handling, file validation, Next.js route handler uploads, storage management.
+- **`pdf-processing.md`:** PDF parsing, text extraction, chunking strategies (size, overlap).
+- **`vector-search.md`:** pgvector setup, embedding generation (Gemini), similarity search, HNSW indexing.
+- **`rag-pipeline.md`:** Full RAG workflow: ingest -> chunk -> embed -> store -> retrieve -> generate.
+- **`llm-integration.md`:** Google Gemini SDK, prompt engineering, streaming responses, rate limits, free tier management.
 
 ---
 
-<!--
-## Quick Start
+### Sub-Agent Profiles (`.harness/agents/`)
 
-To use this harness in a new project:
+| Agent | Responsibility |
+|---|---|
+| **architect** | Types, interfaces, file tree proposals, data contracts, Prisma schema design |
+| **ui-expert** | Tailwind layouts, semantic HTML, a11y, Shadcn/ui components |
+| **frontend** | Zustand stores, TanStack Query hooks, side-effects, Next.js pages |
+| **backend** | Next.js API Routes, Prisma queries, file handling, LLM integration |
+| **tester** | Unit tests with `bun:test`, integration tests, test coverage |
+| **ai-engineer** | RAG pipeline, embedding strategy, prompt engineering, Gemini integration |
 
-1. Copy `.harness/`, `AGENTS.md`, `MEMORY.md`, and the relevant entry point file for your AI tool (`.cursorrules`, `CLAUDE.md`, or `opencode.json`).
-2. Update `MEMORY.md` with your project's tech stack and conventions.
-3. Start your AI coding session. The agent will read `AGENTS.md` and automatically follow the governance rules.
+---
 
-No configuration needed beyond what is already in these files. -->
+## Architecture & Conventions
+
+### Directory Structure
+
+```text
+src/
+├── app/                    # Next.js App Router (pages, layouts, API routes)
+├── components/             # Shared global UI components (Shadcn/ui)
+├── features/
+│   └── [feature-name]/
+│       ├── components/     # Feature-specific components
+│       ├── hooks/          # Zustand stores + TanStack Query hooks
+│       └── services/       # API calls
+├── stores/                 # Global Zustand stores
+├── lib/
+│   ├── prisma.ts           # Prisma client singleton
+│   ├── pdf.ts              # PDF parsing utilities
+│   ├── embeddings.ts       # Embedding generation
+│   └── gemini.ts           # Gemini SDK client
+└── utils/                  # Pure utility functions
+```
+
+### Naming Conventions
+
+- **Directories:** `kebab-case`
+- **React Components:** `PascalCase.tsx`
+- **Hooks/Utilities:** `camelCase.ts`
+- **Styles/Assets:** `kebab-case`
+
+### Git Branching
+
+- `main` — Production ready, no direct commits
+- `development` — Integration branch
+- `feat/[feature-name]` — Feature branches
+- `bug/[bug-name]` — Hotfixes
