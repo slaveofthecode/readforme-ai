@@ -84,6 +84,7 @@ src/
 - [x] Add AI Engineer sub-agent (`ai-engineer.md`)
 - [x] Add database command (`db.md`)
 - [x] Create lessons learned registry (`lessons-learned.md`)
+- [x] Create PR command (`pr.md`)
 
 ### Current Session
 
