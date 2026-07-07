@@ -27,12 +27,10 @@
 - **Hooks/Utilities/Files:** `camelCase.ts` (e.g., `useAuth.ts`, `formatDate.ts`)
 - **Styles/Assets:** `kebab-case` (e.g., `main-logo.png`)
 
-### Git Branching Strategy (Feature-Driven)
+### Git Branching Strategy (Phase-Based)
 
-- `main` -> Production ready, stable code. No direct commits allowed.
-- `development` -> Integration branch for features.
-- `feat/[feature-name]` -> Atomic feature branches (e.g., `feat/login-validation`).
-- `bug/[bug-name]` -> Hotfixes or bug resolutions.
+- `master` -> Production ready, stable code. No direct commits allowed.
+- `feat/001-<fase-name>` -> Phase-based feature branches (e.g., `feat/001-scaffolding`). Each branch starts from `master` and is merged back via PR.
 
 ## 3. Directory Structure Map (Feature-Driven Template)
 
@@ -85,3 +83,12 @@ src/
 - [x] Add LLM integration skill (`llm-integration.md`)
 - [x] Add AI Engineer sub-agent (`ai-engineer.md`)
 - [x] Add database command (`db.md`)
+- [x] Create lessons learned registry (`lessons-learned.md`)
+
+### Current Session
+
+- **Active Phase:** `feat/000-init` — Initial harness setup and branching strategy
+- **Last Task Completed:** Harness foundation, stack definition, entry points
+- **Next Task:** `feat/001-scaffolding` — Initialize Next.js project with all dependencies
+- **Branching Decision:** Phase-based branches (`feat/001-*`) originating from `master`
+- **Blockers:** Ninguno
