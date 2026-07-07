@@ -18,6 +18,18 @@ Then reload: `source ~/.zshrc`
 
 ## 3. Usage
 
+### Via OpenCode (recommended)
+
+Inside the OpenCode chat, type:
+
+```
+/pr
+```
+
+The AI will ask you for a description and create the PR automatically.
+
+### Via terminal
+
 ```bash
 # 1. Stage and commit your changes
 git add .
@@ -40,5 +52,5 @@ pr
 
 ## 5. Protocol
 
-- **User Trigger:** Run manually after completing a phase branch.
-- **AI Role:** The AI does NOT run this command. It can suggest the user to run it and help write the description.
+- **User Trigger:** Run `/pr` in the OpenCode chat, or `pr` in the terminal.
+- **AI Role:** The AI executes the `gh` commands to create the PR, asks for description, and shows the result URL.
