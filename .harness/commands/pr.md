@@ -54,3 +54,11 @@ pr
 
 - **User Trigger:** Run `/pr` in the OpenCode chat, or `pr` in the terminal.
 - **AI Role:** The AI executes the `gh` commands to create the PR, asks for description, and shows the result URL.
+
+## 6. Restrictions
+
+- The AI is **FORBIDDEN** to create Pull Requests without the user explicitly typing `/pr`.
+- The user saying "go ahead", "yes", or similar after completing work does **NOT** authorize PR creation.
+- The AI may ONLY commit and push when the user explicitly requests it — commit+push and PR creation are separate actions.
+- The AI should **NEVER** suggest creating a PR unless the user asks for it.
+- For the full set of AI execution rules, see `AGENTS.md` section 4 (Control Commands Automation).

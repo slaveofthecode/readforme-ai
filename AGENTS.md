@@ -34,6 +34,7 @@ Every time code is introduced or refactored, you MUST explicitly suggest or requ
 - Request running `bun x tsc --noEmit` to verify that TypeScript strict mode compiles perfectly.
 - Request running `bun test` whenever business logic, utilities, or state structures are modified.
 - Request running `bunx prisma migrate dev` / `bunx prisma generate` after schema modifications.
+- For PR creation rules and restrictions, refer to `.harness/commands/pr.md` — the single source of truth for PR-related constraints.
 
 ## 5. Quality Standards Enforcement
 
