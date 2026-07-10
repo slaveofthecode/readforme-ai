@@ -56,6 +56,31 @@ If a relevant skill file exists in `.harness/skills/`, you MUST read it before w
 
 When a task or milestone is successfully achieved, you MUST remind the user to update the corresponding item in the "Active Tasks & Progress" section of `MEMORY.md` to keep the project state synchronized.
 
-## 7. Tool Agnostic Enforcement
+## 7. Language Protocol
+
+All code, documentation, comments, commit messages, PR descriptions, and harness files MUST be written in English. This includes:
+
+- Source code comments
+- Variable and function names
+- README files and documentation
+- Git commit messages
+- PR titles and descriptions
+- `.harness/` documentation
+- Error messages and logs
+
+The only exception is direct communication between the user and the AI in the chat interface, which may be in any language.
+
+## 8. Commit Protocol
+
+The AI is strictly FORBIDDEN from executing `git add`, `git commit`, or `git push` unless the user explicitly requests it. After completing a task, the AI must:
+
+1. Present a summary of all changes made
+2. Show `git status` and/or `git diff` output
+3. Wait for the user to review and approve
+4. Only then execute the commit (and optionally push)
+
+This ensures the user maintains full control over what gets committed to the repository.
+
+## 9. Tool Agnostic Enforcement
 
 These instructions are designed to work identically across all AI coding tools. If your tool supports custom instructions (Cursor rules, OpenCode AGENTS.md, Claude Code CLAUDE.md, Copilot instructions, etc.), they should all reference this file as the single source of truth. Do not assume any specific tool's capabilities — focus on the principles, standards, and protocols defined here.

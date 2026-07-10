@@ -86,6 +86,14 @@ src/
 - [x] Create lessons learned registry (`lessons-learned.md`)
 - [x] Create PR command (`pr.md` + `/pr` in OpenCode)
 
+### Governance & Standards
+
+- [x] English language protocol enforced across all files
+- [x] Branch naming convention: `feat/NNN-name`, `bug/NNN-name`
+- [x] No commits without explicit user request
+- [ ] Feature specification template (pending)
+- [ ] Development methodology documentation (pending)
+
 ### Current Session
 
 - **Active Phase:** `feat/001-scaffolding` — Initialize Next.js project with all dependencies
