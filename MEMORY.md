@@ -27,10 +27,13 @@
 - **Hooks/Utilities/Files:** `camelCase.ts` (e.g., `useAuth.ts`, `formatDate.ts`)
 - **Styles/Assets:** `kebab-case` (e.g., `main-logo.png`)
 
-### Git Branching Strategy (Phase-Based)
+### Git Branching Strategy
 
 - `master` -> Production ready, stable code. No direct commits allowed.
-- `feat/001-<fase-name>` -> Phase-based feature branches (e.g., `feat/001-scaffolding`). Each branch starts from `master` and is merged back via PR.
+- `feat/XXX-description` -> Feature branches (e.g., `feat/002-file-upload`). XXX is a correlating number starting from 001.
+- `bug/XXX-description` -> Bug fix branches (e.g., `bug/001-doc-issues`). XXX is a correlating number starting from 001.
+- All branches MUST originate from `master`.
+- Branch naming is tracked in `.harness/registry.md`.
 
 ## 3. Directory Structure Map (Feature-Driven Template)
 
@@ -53,6 +56,9 @@ src/
 ```
 
 ## 4. Active Tasks & Progress
+
+> Feature and bug tracking is managed in `.harness/registry.md`.
+> Read this file at session start to learn from past patterns and avoid repeating mistakes.
 
 ### Harness Foundation
 
@@ -85,11 +91,12 @@ src/
 - [x] Add database command (`db.md`)
 - [x] Create lessons learned registry (`lessons-learned.md`)
 - [x] Create PR command (`pr.md` + `/pr` in OpenCode)
+- [x] Create AI learning memory registry (`registry.md`)
 
 ### Current Session
 
-- **Active Phase:** `feat/001-scaffolding` — Initialize Next.js project with all dependencies
-- **Last Task Completed:** Next.js scaffold, Shadcn/ui, core libs, directory structure
-- **Next Task:** `feat/002-file-upload` or `feat/002-chat-ui` — First feature implementation
-- **Branching Decision:** Phase-based branches (`feat/001-*`) originating from `master`
+- **Active Branch:** `bug/001-doc-issues` — Fix documentation issues
+- **Last Task Completed:** README_APP.md translated, STEP_BY_STEP.md deleted, README.md rewritten with methodology, registry.md created
+- **Next Task:** Commit changes, create PR, then start `feat/002-file-upload` or `feat/002-chat-ui`
+- **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master`
 - **Blockers:** PostgreSQL + pgvector not installed, GEMINI_API_KEY not configured

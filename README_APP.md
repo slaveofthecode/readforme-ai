@@ -1,87 +1,87 @@
 # ReadForMe AI
 
-## Descripción
+## Description
 
-ReadForMe AI es una aplicación web que permite a los usuarios **subir documentos PDF y chatear con su contenido** utilizando inteligencia artificial. La app procesa los documentos, extrae su texto, genera embeddings vectoriales y utiliza RAG (Retrieval-Augmented Generation) para responder preguntas basadas exclusivamente en el contenido de los documentos subidos.
+ReadForMe AI is a web application that allows users to **upload PDF documents and chat with their content** using artificial intelligence. The app processes documents, extracts text, generates vector embeddings, and uses RAG (Retrieval-Augmented Generation) to answer questions based exclusively on the content of the uploaded documents.
 
-## Funcionalidades Principales
+## Key Features
 
-- **Upload de PDFs:** Arrastrar y soltar o seleccionar archivos PDF para subir
-- **Procesamiento de Documentos:** Extracción de texto, chunking inteligente con overlap
-- **Chat con Documentos:** Interfaz conversacional para preguntar sobre el contenido
-- **RAG Pipeline:** Búsqueda semántica de chunks relevantes antes de generar respuestas
-- **Multi-Documento:** Seleccionar múltiples documentos para contexto combinado
-- **Citas y Fuentes:** Respuestas con referencias a la fuente (archivo + página)
-- **Historial de Chat:** Conversaciones persistentes por sesión
+- **PDF Upload:** Drag-and-drop or select PDF files to upload
+- **Document Processing:** Text extraction, intelligent chunking with overlap
+- **Document Chat:** Conversational interface to ask about document content
+- **RAG Pipeline:** Semantic search for relevant chunks before generating responses
+- **Multi-Document:** Select multiple documents for combined context
+- **Citations & Sources:** Responses with references to source (file + page)
+- **Chat History:** Persistent conversations per session
 
-## Arquitectura
+## Architecture
 
 ```
-Usuario sube PDF
+User uploads PDF
       ↓
-Extracción de texto (pdfjs-dist)
+Text extraction (pdfjs-dist)
       ↓
-Chunking con overlap (500-1000 tokens)
+Chunking with overlap (500-1000 tokens)
       ↓
-Generación de embeddings (Gemini text-embedding-004)
+Embedding generation (Gemini text-embedding-004)
       ↓
-Almacenamiento en PostgreSQL + pgvector
+Storage in PostgreSQL + pgvector
       ↓
 ─────────────────────────────────
       ↓
-Usuario envía pregunta
+User sends question
       ↓
-Embedding de la query
+Query embedding
       ↓
-Búsqueda de similitud (cosine) → Top K chunks
+Similarity search (cosine) → Top K chunks
       ↓
-Construcción de prompt con contexto
+Prompt construction with context
       ↓
-Generación de respuesta (Gemini 1.5 Flash)
+Response generation (Gemini 1.5 Flash)
       ↓
-Streaming de respuesta al chat
+Response streaming to chat
 ```
 
-## Stack Tecnológico
+## Tech Stack
 
-| Capa | Tecnología | Propósito |
-|------|------------|-----------|
+| Layer | Technology | Purpose |
+|-------|------------|---------|
 | **Framework** | Next.js 16 (App Router) | Full-stack React framework |
 | **Runtime** | Bun | JavaScript runtime + package manager |
-| **Language** | TypeScript (Strict) | Type safety total |
+| **Language** | TypeScript (Strict) | Full type safety |
 | **Frontend** | React 19 | UI library |
 | **Styling** | Tailwind CSS 4 | Utility-first CSS |
-| **UI Components** | Shadcn/ui | Componentes pre-construidos |
+| **UI Components** | Shadcn/ui | Pre-built components |
 | **State (UI)** | Zustand | Client state management |
 | **State (Server)** | TanStack Query | Server state + cache |
 | **ORM** | Prisma 7 | Database access |
-| **Database** | PostgreSQL + pgvector | Almacenamiento + vectores |
-| **Embeddings** | Gemini text-embedding-004 | Generación de vectores (768d) |
-| **LLM** | Gemini 1.5 Flash | Generación de respuestas |
-| **PDF Parser** | pdfjs-dist | Extracción de texto |
+| **Database** | PostgreSQL + pgvector | Storage + vectors |
+| **Embeddings** | Gemini text-embedding-004 | Vector generation (768d) |
+| **LLM** | Gemini 1.5 Flash | Response generation |
+| **PDF Parser** | pdfjs-dist | Text extraction |
 | **Testing** | Bun Test | Unit testing |
 | **Linting** | ESLint + Prettier | Code quality |
 
-## Configuración
+## Configuration
 
-### Variables de Entorno
+### Environment Variables
 
-Copiar `.env.example` a `.env` y configurar:
+Copy `.env.example` to `.env` and configure:
 
 ```bash
-# Database (PostgreSQL con pgvector)
+# Database (PostgreSQL with pgvector)
 DATABASE_URL="postgresql://user:password@localhost:5432/readforme"
 
 # Google Gemini API Key
-# Obtener en: https://aistudio.google.com/apikey
+# Get it at: https://aistudio.google.com/apikey
 GEMINI_API_KEY="your-gemini-api-key-here"
 ```
 
-### Base de Datos
+### Database
 
-1. **PostgreSQL** debe estar ejecutándose localmente o en un servicio cloud
-2. **pgvector** debe estar habilitado como extensión
-3. Ejecutar migraciones:
+1. **PostgreSQL** must be running locally or on a cloud service
+2. **pgvector** must be enabled as an extension
+3. Run migrations:
    ```bash
    bunx prisma migrate dev --name init
    bunx prisma generate
@@ -89,11 +89,11 @@ GEMINI_API_KEY="your-gemini-api-key-here"
 
 ### Gemini API Key
 
-1. Ir a [Google AI Studio](https://aistudio.google.com/apikey)
-2. Crear una API key gratuita
-3. Agregarla a `.env` como `GEMINI_API_KEY`
+1. Go to [Google AI Studio](https://aistudio.google.com/apikey)
+2. Create a free API key
+3. Add it to `.env` as `GEMINI_API_KEY`
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 src/
@@ -127,42 +127,42 @@ src/
 └── utils/                      # Pure utility functions
 ```
 
-## Comandos Disponibles
+## Available Commands
 
 ```bash
-# Desarrollo
-bun run dev                    # Iniciar servidor de desarrollo
+# Development
+bun run dev                    # Start development server
 
 # Building
-bun run build                  # Build de producción
-bun run start                  # Iniciar servidor de producción
+bun run build                  # Production build
+bun run start                  # Start production server
 
 # Code Quality
-bun run lint                   # Verificar ESLint
+bun run lint                   # Check ESLint
 bun run lint:fix               # Auto-fix ESLint
 
 # Type Checking
-bun x tsc --noEmit             # Verificar tipos
+bun x tsc --noEmit             # Check types
 
 # Testing
-bun test                       # Ejecutar todos los tests
-bun test --watch               # Modo watch
-bun test ./path/to/test.ts     # Test específico
+bun test                       # Run all tests
+bun test --watch               # Watch mode
+bun test ./path/to/test.ts     # Specific test
 
 # Database
-bunx prisma migrate dev        # Crear migración
-bunx prisma generate           # Generar Prisma Client
-bunx prisma studio             # Abrir Prisma Studio
-bunx prisma db seed            # Ejecutar seed
+bunx prisma migrate dev        # Create migration
+bunx prisma generate           # Generate Prisma Client
+bunx prisma studio             # Open Prisma Studio
+bunx prisma db seed            # Run seed
 ```
 
-## Limitaciones & Costos
+## Limitations & Costs
 
 - **Gemini Free Tier:** 60 requests/min, 1500 requests/day
-- **Embeddings:**文本-embedding-004 (768 dimensiones)
-- **PDF Máximo:** 100 páginas por documento (recomendado)
-- **Chunk Size:** 500-1000 tokens con 10-15% overlap
+- **Embeddings:** text-embedding-004 (768 dimensions)
+- **Max PDF:** 100 pages per document (recommended)
+- **Chunk Size:** 500-1000 tokens with 10-15% overlap
 
-## Licencia
+## License
 
-Privado - Todos los derechos reservados.
+Private - All rights reserved.
