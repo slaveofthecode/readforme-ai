@@ -11,7 +11,7 @@ These instructions are tool-agnostic. Regardless of which AI coding assistant is
 Before answering any user request or generating code, you MUST mentally execute this sequence:
 
 1. **Sync State:** Read `MEMORY.md` to understand the tech stack, naming conventions, and current project progress.
-2. **Consult All Skills:** Read every file inside `.harness/skills/` to ensure no quality restrictions or architectural boundaries are broken.
+2. **Consult All Skills:** Read every file inside `.harness/skills/` and `.harness/lessons-learned.md` to ensure no quality restrictions, architectural boundaries, or past mistakes are repeated.
 3. **Trace Roadmap:** Check the "Active Tasks & Progress" section in `MEMORY.md` to ensure your output aligns with the active goal.
 
 ## 3. Atomic Delegation (Sub-Agent Routing)
