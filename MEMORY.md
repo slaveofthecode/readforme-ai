@@ -90,6 +90,7 @@ src/
 
 - [x] English language protocol enforced across all files
 - [x] Branch naming convention: `feat/NNN-name`, `bug/NNN-name`
+- [x] No commits without explicit user request
 - [ ] Feature specification template (pending)
 - [ ] Development methodology documentation (pending)
 
