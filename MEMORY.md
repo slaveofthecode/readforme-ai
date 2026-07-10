@@ -88,8 +88,8 @@ src/
 
 ### Current Session
 
-- **Active Phase:** `feat/000-init` — Initial harness setup and branching strategy
-- **Last Task Completed:** Harness foundation, stack definition, entry points
-- **Next Task:** `feat/001-scaffolding` — Initialize Next.js project with all dependencies
+- **Active Phase:** `feat/001-scaffolding` — Initialize Next.js project with all dependencies
+- **Last Task Completed:** Next.js scaffold, Shadcn/ui, core libs, directory structure
+- **Next Task:** `feat/002-file-upload` or `feat/002-chat-ui` — First feature implementation
 - **Branching Decision:** Phase-based branches (`feat/001-*`) originating from `master`
-- **Blockers:** Ninguno
+- **Blockers:** PostgreSQL + pgvector not installed, GEMINI_API_KEY not configured
