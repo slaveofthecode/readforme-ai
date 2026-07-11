@@ -57,8 +57,5 @@ pr
 
 ## 6. Restrictions
 
-- The AI is **FORBIDDEN** to create Pull Requests without the user explicitly typing `/pr`.
-- The user saying "go ahead", "yes", or similar after completing work does **NOT** authorize PR creation.
-- The AI may ONLY commit and push when the user explicitly requests it — commit+push and PR creation are separate actions.
-- The AI should **NEVER** suggest creating a PR unless the user asks for it.
-- For the full set of AI execution rules, see `AGENTS.md` section 4 (Control Commands Automation).
+- For full git write operation rules (commit, push, PR), refer to `.harness/commands/git.md` — the single source of truth.
+- PR creation is **ALWAYS** user-triggered via `/pr` command.

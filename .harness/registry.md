@@ -29,7 +29,8 @@
 
 <!-- Add patterns that caused problems and must be avoided -->
 
-- **Creating PRs without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. "Go ahead" or "yes" after completing work does NOT authorize PR creation — only commit+push. PR creation is ALWAYS user-triggered via `/pr`. Rule lives in `.harness/commands/pr.md` section 6.
+- **Committing/pushing without explicit authorization:** The AI must NEVER run `git add`, `git commit`, or `git push` unless the user explicitly requests it. "Go ahead", "yes", "apply" do NOT authorize git write operations. Each action (commit, push, PR) requires separate explicit authorization. Rule lives in `.harness/commands/git.md`.
+- **Creating PRs without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. PR creation is ALWAYS user-triggered via `/pr`. Rule lives in `.harness/commands/git.md` section 2.
 - **Generic branch naming:** Using `feat/feature-name` without correlating numbers leads to confusion when multiple features exist. Always use `feat/XXX-description` format.
 
 ---
@@ -54,7 +55,8 @@
 |---------|----------|-------------|------|
 | Branch naming inconsistency (`main` vs `master`) | Standardized to `master` across all docs | bug/001-doc-issues | 2025-07-10 |
 | Spanish documentation in English-only project | Translated README_APP.md, deleted STEP_BY_STEP.md | bug/001-doc-issues | 2025-07-10 |
-| PR created without user authorization | Added restriction to pr.md section 6, reference in AGENTS.md | bug/001-doc-issues | 2025-07-10 |
+| PR created without user authorization | Created .harness/commands/git.md as single source of truth for all git write operations | bug/001-doc-issues | 2025-07-10 |
+| Commit/push without explicit authorization | Added strict authorization rules to git.md, referenced from AGENTS.md and pr.md | bug/001-doc-issues | 2025-07-10 |
 
 ---
 
