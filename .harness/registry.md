@@ -14,7 +14,8 @@
 |----|------|------|--------|--------|------|
 | 001 | feat | Scaffolding | `feat/001-scaffolding` | completed | 2025-07-10 |
 | 001 | bug | Doc Issues | `bug/001-doc-issues` | completed | 2025-07-10 |
-| 002 | bug | Harness Improvements | `bug/002-harness-improvements` | in-progress | 2026-07-13 |
+| 002 | bug | Harness Improvements | `bug/002-harness-improvements` | completed | 2026-07-13 |
+| 003 | bug | Harness Specs | `bug/003-harness-specs` | in-progress | 2026-07-13 |
 
 ---
 
@@ -25,6 +26,7 @@
 <!-- Add patterns that worked well and should be reused -->
 
 - **Harness-first setup:** Configuring the full harness (agents, skills, commands) before writing any app code ensures consistent quality from day one.
+- **Spec-driven development:** Creating specs in `.harness/specs/` before implementing features ensures clear acceptance criteria and architectural decisions are documented upfront.
 
 ### Anti-Patterns to Avoid
 
@@ -46,6 +48,7 @@
 | Phase-based branching from `master` | Isolates each feature/bug, enables safe code review, prevents cascading failures | 2025-07-10 |
 | SDD + TDD methodology | Specifications first (SDD) prevents scope creep; tests (TDD) prevent regressions | 2025-07-10 |
 | Separate README.md (harness) and README_APP.md (app) | Clear separation of concerns: harness governance vs app documentation | 2025-07-10 |
+| Specs in `.harness/specs/` (not active/completed dirs) | Living documents with frontmatter status; follows industry best practices (PragSpec, Weaverse, CodeSpec) | 2026-07-13 |
 
 ---
 
