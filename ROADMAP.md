@@ -11,7 +11,7 @@
 | # | Feature | Branch | Status | Depends On | Spec |
 |---|---------|--------|--------|------------|------|
 | 001 | Scaffolding | `feat/001-scaffolding` | ✅ completed | — | — |
-| 002 | Layout & Providers | `feat/002-layout-providers` | 🔄 in-progress | 001 | `.harness/specs/002-layout-providers.md` |
+| 002 | Layout & Providers | `feat/002-layout-providers` | ✅ completed | 001 | `.harness/specs/002-layout-providers.md` |
 | 003 | Database Schema | `feat/003-database-schema` | ⏳ pending | 002 | `.harness/specs/003-database-schema.md` |
 | 004 | File Upload | `feat/004-file-upload` | ⏳ pending | 002, 003 | `.harness/specs/004-file-upload.md` |
 | 005 | File Management | `feat/005-file-management` | ⏳ pending | 002, 003 | `.harness/specs/005-file-management.md` |
@@ -47,7 +47,7 @@
 
 ---
 
-### 002 — Layout & Providers 🔄
+### 002 — Layout & Providers ✅
 
 **Goal:** App shell with global providers and responsive layout.
 
@@ -61,6 +61,8 @@
 **Spec:** `.harness/specs/002-layout-providers.md`
 
 **Branch:** `feat/002-layout-providers`
+
+**Completed:** 2026-07-13
 
 ---
 
