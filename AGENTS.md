@@ -12,7 +12,8 @@ Before answering any user request or generating code, you MUST mentally execute 
 
 1. **Sync State:** Read `MEMORY.md` to understand the tech stack, naming conventions, and current project progress.
 2. **Consult All Skills:** Read every file inside `.harness/skills/` and `.harness/lessons-learned.md` to ensure no quality restrictions, architectural boundaries, or past mistakes are repeated.
-3. **Trace Roadmap:** Check the "Active Tasks & Progress" section in `MEMORY.md` to ensure your output aligns with the active goal.
+3. **Learn from History:** Read `.harness/registry.md` to understand accumulated patterns, anti-patterns, and architecture decisions from past features and bugs.
+4. **Trace Roadmap:** Check the "Active Tasks & Progress" section in `MEMORY.md` to ensure your output aligns with the active goal.
 
 ## 3. Atomic Delegation (Sub-Agent Routing)
 
@@ -33,6 +34,7 @@ Every time code is introduced or refactored, you MUST explicitly suggest or requ
 - Request running `bun x tsc --noEmit` to verify that TypeScript strict mode compiles perfectly.
 - Request running `bun test` whenever business logic, utilities, or state structures are modified.
 - Request running `bunx prisma migrate dev` / `bunx prisma generate` after schema modifications.
+- For git write operations (commit, push, PR), refer to `.harness/commands/git.md` — the single source of truth for authorization rules.
 
 ## 5. Quality Standards Enforcement
 

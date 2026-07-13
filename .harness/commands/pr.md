@@ -54,3 +54,8 @@ pr
 
 - **User Trigger:** Run `/pr` in the OpenCode chat, or `pr` in the terminal.
 - **AI Role:** The AI executes the `gh` commands to create the PR, asks for description, and shows the result URL.
+
+## 6. Restrictions
+
+- For full git write operation rules (commit, push, PR), refer to `.harness/commands/git.md` — the single source of truth.
+- PR creation is **ALWAYS** user-triggered via `/pr` command.
