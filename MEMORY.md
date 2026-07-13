@@ -29,11 +29,12 @@
 
 ### Git Branching Strategy
 
-- `master` -> Production ready, stable code. No direct commits allowed.
+- `master` -> Production ready, stable code. **ABSOLUTELY NO direct commits, edits, or modifications allowed.** Changes reach master ONLY through merged PRs.
 - `feat/XXX-description` -> Feature branches (e.g., `feat/002-file-upload`). XXX is a correlating number starting from 001.
-- `bug/XXX-description` -> Bug fix branches (e.g., `bug/001-doc-issues`). XXX is a correlating number starting from 001.
+- `bug/XXX-description` -> Bug fix branches (e.g., `bug/001-doc-issues`). XXX is a correlating number starting from 001. Includes harness improvements.
 - All branches MUST originate from `master`.
 - Branch naming is tracked in `.harness/registry.md`.
+- **Enforcement:** See `AGENTS.md` section 7 and `.harness/commands/git.md` section 2.
 
 ## 3. Directory Structure Map (Feature-Driven Template)
 
@@ -103,8 +104,8 @@ src/
 
 ### Current Session
 
-- **Active Branch:** `bug/001-doc-issues` — Fix documentation issues
+- **Active Branch:** `bug/002-harness-improvements` — Improve lessons-learned protocol + branch protection rules
 - **Last Task Completed:** README_APP.md translated, STEP_BY_STEP.md deleted, README.md rewritten with methodology, registry.md created
 - **Next Task:** Commit changes, create PR, then start `feat/002-file-upload` or `feat/002-chat-ui`
-- **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master`
+- **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master` (harness improvements = `bug/`)
 - **Blockers:** PostgreSQL + pgvector not installed, GEMINI_API_KEY not configured

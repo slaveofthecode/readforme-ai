@@ -13,7 +13,8 @@
 | ID | Type | Name | Branch | Status | Date |
 |----|------|------|--------|--------|------|
 | 001 | feat | Scaffolding | `feat/001-scaffolding` | completed | 2025-07-10 |
-| 001 | bug | Doc Issues | `bug/001-doc-issues` | in-progress | 2025-07-10 |
+| 001 | bug | Doc Issues | `bug/001-doc-issues` | completed | 2025-07-10 |
+| 002 | bug | Harness Improvements | `bug/002-harness-improvements` | in-progress | 2026-07-13 |
 
 ---
 
@@ -32,6 +33,7 @@
 - **Committing/pushing without explicit authorization:** The AI must NEVER run `git add`, `git commit`, or `git push` unless the user explicitly requests it. "Go ahead", "yes", "apply" do NOT authorize git write operations. Each action (commit, push, PR) requires separate explicit authorization. Rule lives in `.harness/commands/git.md`.
 - **Creating PRs without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. PR creation is ALWAYS user-triggered via `/pr`. Rule lives in `.harness/commands/git.md` section 2.
 - **Generic branch naming:** Using `feat/feature-name` without correlating numbers leads to confusion when multiple features exist. Always use `feat/XXX-description` format.
+- **Modifying master directly:** The AI must NEVER make any changes on the `master` branch. All work happens on feature/bug branches. Master is only modified via merged PRs. Rule lives in `.harness/commands/git.md` section 2 and `AGENTS.md` section 7.
 
 ---
 
@@ -72,6 +74,13 @@
 
 ## Lessons Learned Registry
 
-<!-- Mirror entries from .harness/lessons-learned.md for AI quick access -->
+<!-- Mirror entries from .harness/lessons-learned.md for quick AI access. Full details live in lessons-learned.md. -->
 
-_No entries yet. This section will populate as bugs are fixed and lessons are documented._
+| Phase | Error | Lesson | Author |
+|-------|-------|--------|--------|
+| bug/002 | Making changes directly on master | NEVER modify master. Always create a branch first. Master is only modified via merged PRs. | AI |
+
+<!-- Example:
+| feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |
+| bug/002-upload | No file type validation server-side | Always validate MIME type server-side, never trust client | Human |
+-->
