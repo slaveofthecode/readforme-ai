@@ -58,8 +58,8 @@ src/
 
 ## 4. Active Tasks & Progress
 
-> Feature and bug tracking is managed in `.harness/registry.md`.
-> Read this file at session start to learn from past patterns and avoid repeating mistakes.
+> Feature and bug tracking is managed in `.harness/registry.md` and `ROADMAP.md`.
+> Read these files at session start to understand current progress and learn from past patterns.
 
 ### Harness Foundation
 
@@ -69,6 +69,7 @@ src/
 - [x] Configure execution verification protocols (`.harness/commands/`)
 - [x] Establish coding quality standards and constraints (`.harness/skills/`)
 - [x] Define atomic sub-agent behavior profiles (`.harness/agents/`)
+- [x] Create feature roadmap (`ROADMAP.md`) — master plan with all features, dependencies, and status
 
 ### Harness Entry Points (Tool-Agnostic)
 
