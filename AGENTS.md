@@ -14,6 +14,7 @@ Before answering any user request or generating code, you MUST mentally execute 
 2. **Consult All Skills:** Read every file inside `.harness/skills/` and `.harness/lessons-learned.md` to ensure no quality restrictions, architectural boundaries, or past mistakes are repeated.
 3. **Learn from History:** Read `.harness/registry.md` to understand accumulated patterns, anti-patterns, and architecture decisions from past features and bugs.
 4. **Trace Roadmap:** Check the "Active Tasks & Progress" section in `MEMORY.md` to ensure your output aligns with the active goal.
+5. **Read Feature Spec:** If working on a feature branch (`feat/NNN-*`), read the corresponding spec file in `.harness/specs/NNN-*.md` to understand acceptance criteria, architecture, and implementation notes. For bug branches, no spec is required.
 
 ## 3. Atomic Delegation (Sub-Agent Routing)
 
