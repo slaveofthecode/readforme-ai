@@ -15,7 +15,10 @@
 | 001 | feat | Scaffolding | `feat/001-scaffolding` | completed | 2025-07-10 |
 | 001 | bug | Doc Issues | `bug/001-doc-issues` | completed | 2025-07-10 |
 | 002 | bug | Harness Improvements | `bug/002-harness-improvements` | completed | 2026-07-13 |
-| 003 | bug | Harness Specs | `bug/003-harness-specs` | in-progress | 2026-07-13 |
+| 003 | bug | Harness Specs | `bug/003-harness-specs` | completed | 2026-07-13 |
+| 004 | bug | PR Creation Lesson | `bug/004-pr-creation-lesson` | in-progress | 2026-07-13 |
+| 005 | bug | Hydration Fix | `bug/005-hydration-fix` | in-progress | 2026-07-13 |
+| 006 | bug | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | in-progress | 2026-07-13 |
 
 ---
 
