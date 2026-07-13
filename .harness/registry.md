@@ -15,7 +15,9 @@
 | 001 | feat | Scaffolding | `feat/001-scaffolding` | completed | 2025-07-10 |
 | 001 | bug | Doc Issues | `bug/001-doc-issues` | completed | 2025-07-10 |
 | 002 | bug | Harness Improvements | `bug/002-harness-improvements` | completed | 2026-07-13 |
-| 003 | bug | Harness Specs | `bug/003-harness-specs` | in-progress | 2026-07-13 |
+| 003 | bug | Harness Specs | `bug/003-harness-specs` | completed | 2026-07-13 |
+| 004 | bug | PR Creation Lesson | `bug/004-pr-creation-lesson` | in-progress | 2026-07-13 |
+| 005 | bug | Hydration Fix | `bug/005-hydration-fix` | in-progress | 2026-07-13 |
 
 ---
 
@@ -84,6 +86,7 @@
 |-------|-------|--------|--------|
 | bug/002 | Making changes directly on master | NEVER modify master. Always create a branch first. Master is only modified via merged PRs. | AI |
 | bug/003 | Creating PR without explicit authorization | NEVER create a PR unless user types `/pr`. Commit authorization ≠ PR authorization. Each git write operation requires separate explicit authorization. | AI |
+| bug/005 | Hydration mismatch from browser extensions | Always add `suppressHydrationWarning` to both `<html>` and `<body>` tags in Next.js apps | AI |
 
 <!-- Example:
 | feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |

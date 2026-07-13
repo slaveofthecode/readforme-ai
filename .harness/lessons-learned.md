@@ -53,3 +53,12 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Fix:** Asked user about the mistake, will delete the unauthorized PR
 - **Lesson:** NEVER create a PR unless user explicitly types `/pr`. Commit authorization ≠ PR authorization. Each git write operation (commit, push, PR) requires separate explicit authorization.
 - **Author:** AI
+
+## bug/005-hydration-fix — 2026-07-13
+
+### Error: Hydration mismatch caused by browser extensions
+- **Context:** User tested app on mobile browser with Grammarly extension, got hydration error
+- **Cause:** Browser extensions (Grammarly, etc.) add attributes to DOM elements after server render, causing React hydration mismatch
+- **Fix:** Added `suppressHydrationWarning` prop to `<body>` tag in layout.tsx
+- **Lesson:** Always add `suppressHydrationWarning` to both `<html>` and `<body>` tags when building Next.js apps that will be used in browsers with extensions
+- **Author:** AI
