@@ -58,8 +58,8 @@ src/
 
 ## 4. Active Tasks & Progress
 
-> Feature and bug tracking is managed in `.harness/registry.md`.
-> Read this file at session start to learn from past patterns and avoid repeating mistakes.
+> Feature and bug tracking is managed in `.harness/registry.md` and `ROADMAP.md`.
+> Read these files at session start to understand current progress and learn from past patterns.
 
 ### Harness Foundation
 
@@ -69,6 +69,7 @@ src/
 - [x] Configure execution verification protocols (`.harness/commands/`)
 - [x] Establish coding quality standards and constraints (`.harness/skills/`)
 - [x] Define atomic sub-agent behavior profiles (`.harness/agents/`)
+- [x] Create feature roadmap (`ROADMAP.md`) — master plan with all features, dependencies, and status
 
 ### Harness Entry Points (Tool-Agnostic)
 
@@ -99,13 +100,14 @@ src/
 - [x] English language protocol enforced across all files
 - [x] Branch naming convention: `feat/NNN-name`, `bug/NNN-name`
 - [x] No commits without explicit user request
-- [ ] Feature specification template (pending)
+- [x] Feature specification template (`.harness/specs/TEMPLATE.md`)
+- [x] Feature roadmap (`ROADMAP.md`) — master plan with all features
 - [ ] Development methodology documentation (pending)
 
 ### Current Session
 
-- **Active Branch:** `bug/002-harness-improvements` — Improve lessons-learned protocol + branch protection rules
-- **Last Task Completed:** README_APP.md translated, STEP_BY_STEP.md deleted, README.md rewritten with methodology, registry.md created
-- **Next Task:** Commit changes, create PR, then start `feat/002-file-upload` or `feat/002-chat-ui`
+- **Active Branch:** `bug/006-roadmap-status-tracking` — Add ROADMAP.md and status tracking
+- **Last Task Completed:** ROADMAP.md created, AGENTS.md and MEMORY.md updated
+- **Next Task:** Merge PRs, then continue with `feat/002-layout-providers` or `feat/003-database-schema`
 - **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master` (harness improvements = `bug/`)
-- **Blockers:** PostgreSQL + pgvector not installed, GEMINI_API_KEY not configured
+- **Blockers:** None

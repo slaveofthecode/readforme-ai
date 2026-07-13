@@ -18,6 +18,7 @@
 | 003 | bug | Harness Specs | `bug/003-harness-specs` | completed | 2026-07-13 |
 | 004 | bug | PR Creation Lesson | `bug/004-pr-creation-lesson` | in-progress | 2026-07-13 |
 | 005 | bug | Hydration Fix | `bug/005-hydration-fix` | in-progress | 2026-07-13 |
+| 006 | bug | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | in-progress | 2026-07-13 |
 
 ---
 
