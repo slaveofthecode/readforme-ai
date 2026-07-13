@@ -36,6 +36,7 @@
 - **Creating PRs without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. PR creation is ALWAYS user-triggered via `/pr`. Rule lives in `.harness/commands/git.md` section 2.
 - **Generic branch naming:** Using `feat/feature-name` without correlating numbers leads to confusion when multiple features exist. Always use `feat/XXX-description` format.
 - **Modifying master directly:** The AI must NEVER make any changes on the `master` branch. All work happens on feature/bug branches. Master is only modified via merged PRs. Rule lives in `.harness/commands/git.md` section 2 and `AGENTS.md` section 7.
+- **Creating PR without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. "Go ahead", "yes", "commit" do NOT authorize PR creation. Each git write operation (commit, push, PR) requires its own explicit authorization.
 
 ---
 
@@ -82,6 +83,7 @@
 | Phase | Error | Lesson | Author |
 |-------|-------|--------|--------|
 | bug/002 | Making changes directly on master | NEVER modify master. Always create a branch first. Master is only modified via merged PRs. | AI |
+| bug/003 | Creating PR without explicit authorization | NEVER create a PR unless user types `/pr`. Commit authorization ≠ PR authorization. Each git write operation requires separate explicit authorization. | AI |
 
 <!-- Example:
 | feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |
