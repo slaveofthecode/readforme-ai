@@ -9,8 +9,9 @@
 
 ## 2. Embedding Generation
 
-- Use Google Gemini Embedding API (`text-embedding-004` model).
-- Embedding dimension: 768 for Gemini text-embedding-004.
+- Use Google Gemini Embedding API (`gemini-embedding-001` model).
+- Embedding dimension: 768 (reduced from 3072 default via `outputDimensionality`).
+- Use raw REST API (`batchEmbedContents`) for `outputDimensionality` support (SDK v0.24.1 lacks this parameter).
 - Batch embed chunks to reduce API calls (max 100 chunks per batch).
 - Store embeddings in the database alongside the chunk text and metadata.
 
