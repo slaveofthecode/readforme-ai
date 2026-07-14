@@ -5,3 +5,64 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model File {
+  id           String      @id @default(uuid())
+  name         String
+  size         Int
+  status       FileStatus  @default(uploading)
+  pageCount    Int?
+  errorMessage String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  deletedAt    DateTime?
+
+  chunks       Chunk[]
+  chatMessages ChatMessage[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("files")
+}
+
+model Chunk {
+  id         String   @id @default(uuid())
+  fileId     String
+  text       String
+  embedding  Unsupported("vector(768)")
+  pageNumber Int
+  chunkIndex Int
+  createdAt  DateTime @default(now())
+
+  file       File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([fileId])
+  @@index([pageNumber])
+  @@map("chunks")
+}
+
+model ChatMessage {
+  id        String      @id @default(uuid())
+  fileId    String
+  role      MessageRole
+  content   String
+  createdAt DateTime    @default(now())
+
+  file      File        @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([fileId])
+  @@index([createdAt])
+  @@map("chat_messages")
+}
+
+enum FileStatus {
+  uploading
+  processing
+  ready
+  error
+}
+
+enum MessageRole {
+  user
+  assistant
+}
