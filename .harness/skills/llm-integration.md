@@ -14,7 +14,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 - **Gemini 1.5 Flash:** Default for chat responses (fast, cost-effective, free tier).
 - **Gemini 1.5 Pro:** For complex queries requiring deeper reasoning.
-- **text-embedding-004:** For generating embeddings for vector search.
+- **gemini-embedding-001:** For generating embeddings for vector search.
 - Configure model via environment variable so it can be changed without code changes.
 
 ## 3. Prompt Engineering

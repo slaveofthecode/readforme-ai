@@ -8,16 +8,16 @@
 
 ## Feature Overview
 
-| #   | Feature               | Branch                      | Status       | Depends On | Spec                                     |
-| --- | --------------------- | --------------------------- | ------------ | ---------- | ---------------------------------------- |
-| 001 | Scaffolding           | `feat/001-scaffolding`      | ✅ completed | —          | —                                        |
-| 002 | Layout & Providers    | `feat/002-layout-providers` | ✅ completed | 001        | `.harness/specs/002-layout-providers.md` |
-| 003 | Database Schema       | `feat/003-database-schema`  | ⏳ pending   | 002        | `.harness/specs/003-database-schema.md`  |
-| 004 | File Upload           | `feat/004-file-upload`      | ⏳ pending   | 002, 003   | `.harness/specs/004-file-upload.md`      |
-| 005 | File Management       | `feat/005-file-management`  | ⏳ pending   | 002, 003   | `.harness/specs/005-file-management.md`  |
-| 006 | Chat UI               | `feat/006-chat-ui`          | ⏳ pending   | 002        | `.harness/specs/006-chat-ui.md`          |
-| 007 | RAG Pipeline          | `feat/007-rag-pipeline`     | ⏳ pending   | 003, 006   | `.harness/specs/007-rag-pipeline.md`     |
-| 008 | Polish & Optimization | `feat/008-polish`           | ⏳ pending   | All        | —                                        |
+| # | Feature | Branch | Status | Depends On | Spec |
+|---|---------|--------|--------|------------|------|
+| 001 | Scaffolding | `feat/001-scaffolding` | ✅ completed | — | — |
+| 002 | Layout & Providers | `feat/002-layout-providers` | ✅ completed | 001 | `.harness/specs/002-layout-providers.md` |
+| 003 | Database Schema | `feat/003-database-schema` | ✅ completed | 002 | `.harness/specs/003-database-schema.md` |
+| 004 | File Upload | `feat/004-file-upload` | ✅ completed | 002, 003 | `.harness/specs/004-file-upload.md` |
+| 005 | File Management | `feat/005-file-management` | ⏳ pending | 002, 003 | `.harness/specs/005-file-management.md` |
+| 006 | Chat UI | `feat/006-chat-ui` | ⏳ pending | 002 | `.harness/specs/006-chat-ui.md` |
+| 007 | RAG Pipeline | `feat/007-rag-pipeline` | ⏳ pending | 003, 006 | `.harness/specs/007-rag-pipeline.md` |
+| 008 | Polish & Optimization | `feat/008-polish` | ⏳ pending | All | — |
 
 ### Status Legend
 
@@ -68,7 +68,7 @@
 
 ---
 
-### 003 — Database Schema ⏳
+### 003 — Database Schema ✅
 
 **Goal:** Define all Prisma models and run initial migration.
 
@@ -81,25 +81,34 @@
 - HNSW index on embedding column
 - Initial migration
 
-**Spec:** `.harness/specs/003-database-schema.md` (to be created)
+**Spec:** `.harness/specs/003-database-schema.md`
+
+**Branch:** `feat/003-database-schema`
+
+**Completed:** 2026-07-14
 
 ---
 
-### 004 — File Upload ⏳
+### 004 — File Upload ✅
 
 **Goal:** PDF upload, text extraction, chunking, embedding generation.
 
 **Deliverables:**
 
 - Drag-and-drop upload UI
-- API route `/api/upload`
-- PDF text extraction (pdfjs-dist)
-- Text chunking with overlap (500-1000 tokens)
+- API route `/api/upload` + `/api/files/[fileId]` (GET, DELETE)
+- PDF text extraction (pdfjs-dist legacy build)
+- Text chunking with overlap (2000 chars, 300 overlap)
 - Embedding generation (Gemini text-embedding-004)
-- Store chunks with embeddings in pgvector
-- Upload progress indicator
+- Store chunks with embeddings in pgvector (raw SQL for Unsupported type)
+- Upload progress indicator with TanStack Query polling
+- Async background processing pipeline
 
-**Spec:** `.harness/specs/004-file-upload.md` (to be created)
+**Spec:** `.harness/specs/004-file-upload.md`
+
+**Branch:** `feat/004-file-upload`
+
+**Completed:** 2026-07-14
 
 ---
 

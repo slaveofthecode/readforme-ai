@@ -1,10 +1,11 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Menu, BookOpen } from "lucide-react";
+import { useState } from "react"
+import { Menu, BookOpen } from "lucide-react"
+import { FileUpload } from "@/features/upload/components/file-upload"
 
 export default function Home() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
     <div className="flex h-screen bg-background">
@@ -32,6 +33,11 @@ export default function Home() {
             <span className="text-lg font-semibold text-foreground">
               ReadForMe AI
             </span>
+          </div>
+
+          {/* Upload section */}
+          <div className="px-4 py-4 border-b border-border">
+            <FileUpload />
           </div>
 
           {/* Navigation placeholder */}
@@ -79,5 +85,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  );
+  )
 }
