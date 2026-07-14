@@ -62,3 +62,19 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Fix:** Added `suppressHydrationWarning` prop to `<body>` tag in layout.tsx
 - **Lesson:** Always add `suppressHydrationWarning` to both `<html>` and `<body>` tags when building Next.js apps that will be used in browsers with extensions
 - **Author:** AI
+
+## feat/003-database-schema — 2026-07-13
+
+### Error: Prisma 7 config requires datasource URL in prisma.config.ts
+- **Context:** Running `bunx prisma migrate dev` failed with "The datasource.url property is required in your Prisma config file"
+- **Cause:** Prisma 7 with `prisma.config.ts` requires explicit datasource URL configuration, unlike Prisma 5/6 which auto-read from .env
+- **Fix:** Added `datasource: { url: process.env.DATABASE_URL! }` to prisma.config.ts
+- **Lesson:** When using Prisma 7 with `prisma.config.ts`, always include datasource URL configuration. The `earlyAccess` property does not exist in PrismaConfig type.
+- **Author:** AI
+
+### Error: Providers component imported but not used in layout.tsx
+- **Context:** ESLint warning "Providers is defined but never used" after adding import
+- **Cause:** The Providers component was imported from the scaffolding phase but never wrapped around children in the layout
+- **Fix:** Wrapped `{children}` with `<Providers>{children}</Providers>` in the body tag
+- **Lesson:** Always verify component imports are actually used. If a component is imported, it should be used or the import should be removed.
+- **Author:** AI

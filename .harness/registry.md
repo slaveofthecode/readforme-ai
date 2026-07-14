@@ -20,6 +20,7 @@
 | 005 | bug | Hydration Fix | `bug/005-hydration-fix` | completed | 2026-07-13 |
 | 006 | bug | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | completed | 2026-07-13 |
 | 002 | feat | Layout & Providers | `feat/002-layout-providers` | completed | 2026-07-13 |
+| 003 | feat | Database Schema | `feat/003-database-schema` | in-progress | 2026-07-13 |
 
 ---
 
