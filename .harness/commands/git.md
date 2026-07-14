@@ -12,6 +12,7 @@ The AI is a **code generator**, not an **authorized committer**. All git write o
 The `master` branch is **sacred and untouchable**. The AI is **ABSOLUTELY FORBIDDEN** from making ANY changes directly on `master`.
 
 **Protocol:**
+
 1. ALWAYS create a branch before making any changes
 2. If the current branch is `master`, the AI MUST run `git checkout -b <branch-name>` before editing any file
 3. ALL work happens on feature/bug branches, NEVER on master
@@ -81,6 +82,7 @@ Each step requires its own explicit authorization. The AI must NEVER chain commi
 ## 7. Exception: Verification Commands
 
 The AI MAY run these commands without explicit authorization because they are read-only:
+
 - `bun run lint`
 - `bun run lint:fix`
 - `bun x tsc --noEmit`

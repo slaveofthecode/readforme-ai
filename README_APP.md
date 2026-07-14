@@ -44,23 +44,23 @@ Response streaming to chat
 
 ## Tech Stack
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Framework** | Next.js 16 (App Router) | Full-stack React framework |
-| **Runtime** | Bun | JavaScript runtime + package manager |
-| **Language** | TypeScript (Strict) | Full type safety |
-| **Frontend** | React 19 | UI library |
-| **Styling** | Tailwind CSS 4 | Utility-first CSS |
-| **UI Components** | Shadcn/ui | Pre-built components |
-| **State (UI)** | Zustand | Client state management |
-| **State (Server)** | TanStack Query | Server state + cache |
-| **ORM** | Prisma 7 | Database access |
-| **Database** | PostgreSQL + pgvector | Storage + vectors |
-| **Embeddings** | Gemini text-embedding-004 | Vector generation (768d) |
-| **LLM** | Gemini 1.5 Flash | Response generation |
-| **PDF Parser** | pdfjs-dist | Text extraction |
-| **Testing** | Bun Test | Unit testing |
-| **Linting** | ESLint + Prettier | Code quality |
+| Layer              | Technology                | Purpose                              |
+| ------------------ | ------------------------- | ------------------------------------ |
+| **Framework**      | Next.js 16 (App Router)   | Full-stack React framework           |
+| **Runtime**        | Bun                       | JavaScript runtime + package manager |
+| **Language**       | TypeScript (Strict)       | Full type safety                     |
+| **Frontend**       | React 19                  | UI library                           |
+| **Styling**        | Tailwind CSS 4            | Utility-first CSS                    |
+| **UI Components**  | Shadcn/ui                 | Pre-built components                 |
+| **State (UI)**     | Zustand                   | Client state management              |
+| **State (Server)** | TanStack Query            | Server state + cache                 |
+| **ORM**            | Prisma 7                  | Database access                      |
+| **Database**       | PostgreSQL + pgvector     | Storage + vectors                    |
+| **Embeddings**     | Gemini text-embedding-004 | Vector generation (768d)             |
+| **LLM**            | Gemini 1.5 Flash          | Response generation                  |
+| **PDF Parser**     | pdfjs-dist                | Text extraction                      |
+| **Testing**        | Bun Test                  | Unit testing                         |
+| **Linting**        | ESLint + Prettier         | Code quality                         |
 
 ## Configuration
 

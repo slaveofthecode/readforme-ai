@@ -10,17 +10,17 @@
 
 ## Feature & Bug Registry
 
-| ID | Type | Name | Branch | Status | Date |
-|----|------|------|--------|--------|------|
-| 001 | feat | Scaffolding | `feat/001-scaffolding` | completed | 2025-07-10 |
-| 001 | bug | Doc Issues | `bug/001-doc-issues` | completed | 2025-07-10 |
-| 002 | bug | Harness Improvements | `bug/002-harness-improvements` | completed | 2026-07-13 |
-| 003 | bug | Harness Specs | `bug/003-harness-specs` | completed | 2026-07-13 |
-| 004 | bug | PR Creation Lesson | `bug/004-pr-creation-lesson` | completed | 2026-07-13 |
-| 005 | bug | Hydration Fix | `bug/005-hydration-fix` | completed | 2026-07-13 |
-| 006 | bug | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | completed | 2026-07-13 |
-| 002 | feat | Layout & Providers | `feat/002-layout-providers` | completed | 2026-07-13 |
-| 003 | feat | Database Schema | `feat/003-database-schema` | in-progress | 2026-07-13 |
+| ID  | Type | Name                      | Branch                            | Status      | Date       |
+| --- | ---- | ------------------------- | --------------------------------- | ----------- | ---------- |
+| 001 | feat | Scaffolding               | `feat/001-scaffolding`            | completed   | 2025-07-10 |
+| 001 | bug  | Doc Issues                | `bug/001-doc-issues`              | completed   | 2025-07-10 |
+| 002 | bug  | Harness Improvements      | `bug/002-harness-improvements`    | completed   | 2026-07-13 |
+| 003 | bug  | Harness Specs             | `bug/003-harness-specs`           | completed   | 2026-07-13 |
+| 004 | bug  | PR Creation Lesson        | `bug/004-pr-creation-lesson`      | completed   | 2026-07-13 |
+| 005 | bug  | Hydration Fix             | `bug/005-hydration-fix`           | completed   | 2026-07-13 |
+| 006 | bug  | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | completed   | 2026-07-13 |
+| 002 | feat | Layout & Providers        | `feat/002-layout-providers`       | completed   | 2026-07-13 |
+| 003 | feat | Database Schema           | `feat/003-database-schema`        | in-progress | 2026-07-13 |
 
 ---
 
@@ -49,11 +49,11 @@
 
 <!-- Document key architectural decisions and their rationale -->
 
-| Decision | Rationale | Date |
-|----------|-----------|------|
-| Phase-based branching from `master` | Isolates each feature/bug, enables safe code review, prevents cascading failures | 2025-07-10 |
-| SDD + TDD methodology | Specifications first (SDD) prevents scope creep; tests (TDD) prevent regressions | 2025-07-10 |
-| Separate README.md (harness) and README_APP.md (app) | Clear separation of concerns: harness governance vs app documentation | 2025-07-10 |
+| Decision                                               | Rationale                                                                                                | Date       |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ---------- |
+| Phase-based branching from `master`                    | Isolates each feature/bug, enables safe code review, prevents cascading failures                         | 2025-07-10 |
+| SDD + TDD methodology                                  | Specifications first (SDD) prevents scope creep; tests (TDD) prevent regressions                         | 2025-07-10 |
+| Separate README.md (harness) and README_APP.md (app)   | Clear separation of concerns: harness governance vs app documentation                                    | 2025-07-10 |
 | Specs in `.harness/specs/` (not active/completed dirs) | Living documents with frontmatter status; follows industry best practices (PragSpec, Weaverse, CodeSpec) | 2026-07-13 |
 
 ---
@@ -62,12 +62,12 @@
 
 <!-- Document blockers and how they were resolved -->
 
-| Blocker | Solution | Resolved By | Date |
-|---------|----------|-------------|------|
-| Branch naming inconsistency (`main` vs `master`) | Standardized to `master` across all docs | bug/001-doc-issues | 2025-07-10 |
-| Spanish documentation in English-only project | Translated README_APP.md, deleted STEP_BY_STEP.md | bug/001-doc-issues | 2025-07-10 |
-| PR created without user authorization | Created .harness/commands/git.md as single source of truth for all git write operations | bug/001-doc-issues | 2025-07-10 |
-| Commit/push without explicit authorization | Added strict authorization rules to git.md, referenced from AGENTS.md and pr.md | bug/001-doc-issues | 2025-07-10 |
+| Blocker                                          | Solution                                                                                | Resolved By        | Date       |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------- | ------------------ | ---------- |
+| Branch naming inconsistency (`main` vs `master`) | Standardized to `master` across all docs                                                | bug/001-doc-issues | 2025-07-10 |
+| Spanish documentation in English-only project    | Translated README_APP.md, deleted STEP_BY_STEP.md                                       | bug/001-doc-issues | 2025-07-10 |
+| PR created without user authorization            | Created .harness/commands/git.md as single source of truth for all git write operations | bug/001-doc-issues | 2025-07-10 |
+| Commit/push without explicit authorization       | Added strict authorization rules to git.md, referenced from AGENTS.md and pr.md         | bug/001-doc-issues | 2025-07-10 |
 
 ---
 
@@ -85,11 +85,11 @@
 
 <!-- Mirror entries from .harness/lessons-learned.md for quick AI access. Full details live in lessons-learned.md. -->
 
-| Phase | Error | Lesson | Author |
-|-------|-------|--------|--------|
-| bug/002 | Making changes directly on master | NEVER modify master. Always create a branch first. Master is only modified via merged PRs. | AI |
-| bug/003 | Creating PR without explicit authorization | NEVER create a PR unless user types `/pr`. Commit authorization ≠ PR authorization. Each git write operation requires separate explicit authorization. | AI |
-| bug/005 | Hydration mismatch from browser extensions | Always add `suppressHydrationWarning` to both `<html>` and `<body>` tags in Next.js apps | AI |
+| Phase   | Error                                      | Lesson                                                                                                                                                 | Author |
+| ------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| bug/002 | Making changes directly on master          | NEVER modify master. Always create a branch first. Master is only modified via merged PRs.                                                             | AI     |
+| bug/003 | Creating PR without explicit authorization | NEVER create a PR unless user types `/pr`. Commit authorization ≠ PR authorization. Each git write operation requires separate explicit authorization. | AI     |
+| bug/005 | Hydration mismatch from browser extensions | Always add `suppressHydrationWarning` to both `<html>` and `<body>` tags in Next.js apps                                                               | AI     |
 
 <!-- Example:
 | feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |

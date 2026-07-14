@@ -8,6 +8,8 @@
 
 - **Check only:** `bun run lint`
 - **Auto-fix styles:** `bun run lint:fix` (or `bun x eslint --fix`)
+- **Format all files:** `bun run format` (Prettier)
+- **Check formatting:** `bun run format:check` (Prettier)
 
 ## 3. Protocol & Trigger Conditions
 
