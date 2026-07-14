@@ -6,8 +6,8 @@
 - Initialize the client with the API key from environment variables:
 
 ```typescript
-import { GoogleGenerativeAI } from "@google/generative-ai"
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+import { GoogleGenerativeAI } from "@google/generative-ai";
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 ```
 
 ## 2. Model Selection

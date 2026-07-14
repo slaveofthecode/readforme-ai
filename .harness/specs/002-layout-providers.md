@@ -25,6 +25,7 @@ Set up the application shell with global providers (QueryClientProvider, ThemePr
 ### Types & Interfaces
 
 No custom types required for this feature. Uses existing library types:
+
 - `QueryClient` from `@tanstack/react-query`
 - `ThemeProviderProps` from `next-themes`
 

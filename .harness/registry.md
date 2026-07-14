@@ -50,11 +50,11 @@
 
 <!-- Document key architectural decisions and their rationale -->
 
-| Decision | Rationale | Date |
-|----------|-----------|------|
-| Phase-based branching from `master` | Isolates each feature/bug, enables safe code review, prevents cascading failures | 2025-07-10 |
-| SDD + TDD methodology | Specifications first (SDD) prevents scope creep; tests (TDD) prevent regressions | 2025-07-10 |
-| Separate README.md (harness) and README_APP.md (app) | Clear separation of concerns: harness governance vs app documentation | 2025-07-10 |
+| Decision                                               | Rationale                                                                                                | Date       |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ---------- |
+| Phase-based branching from `master`                    | Isolates each feature/bug, enables safe code review, prevents cascading failures                         | 2025-07-10 |
+| SDD + TDD methodology                                  | Specifications first (SDD) prevents scope creep; tests (TDD) prevent regressions                         | 2025-07-10 |
+| Separate README.md (harness) and README_APP.md (app)   | Clear separation of concerns: harness governance vs app documentation                                    | 2025-07-10 |
 | Specs in `.harness/specs/` (not active/completed dirs) | Living documents with frontmatter status; follows industry best practices (PragSpec, Weaverse, CodeSpec) | 2026-07-13 |
 
 ---
@@ -63,12 +63,12 @@
 
 <!-- Document blockers and how they were resolved -->
 
-| Blocker | Solution | Resolved By | Date |
-|---------|----------|-------------|------|
-| Branch naming inconsistency (`main` vs `master`) | Standardized to `master` across all docs | bug/001-doc-issues | 2025-07-10 |
-| Spanish documentation in English-only project | Translated README_APP.md, deleted STEP_BY_STEP.md | bug/001-doc-issues | 2025-07-10 |
-| PR created without user authorization | Created .harness/commands/git.md as single source of truth for all git write operations | bug/001-doc-issues | 2025-07-10 |
-| Commit/push without explicit authorization | Added strict authorization rules to git.md, referenced from AGENTS.md and pr.md | bug/001-doc-issues | 2025-07-10 |
+| Blocker                                          | Solution                                                                                | Resolved By        | Date       |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------- | ------------------ | ---------- |
+| Branch naming inconsistency (`main` vs `master`) | Standardized to `master` across all docs                                                | bug/001-doc-issues | 2025-07-10 |
+| Spanish documentation in English-only project    | Translated README_APP.md, deleted STEP_BY_STEP.md                                       | bug/001-doc-issues | 2025-07-10 |
+| PR created without user authorization            | Created .harness/commands/git.md as single source of truth for all git write operations | bug/001-doc-issues | 2025-07-10 |
+| Commit/push without explicit authorization       | Added strict authorization rules to git.md, referenced from AGENTS.md and pr.md         | bug/001-doc-issues | 2025-07-10 |
 
 ---
 

@@ -13,3 +13,11 @@
 ## 3. Production Readiness (No Stubs)
 
 - **Completeness:** The AI must NEVER output placeholders, code stubs, or comments like `// TODO: Implement later`. All logic generated must be fully production-ready, logical, and operational.
+
+## 4. Code Style & Formatting
+
+- **Semicolons:** All JavaScript and TypeScript statements MUST end with semicolons. Enforced by `@stylistic/semi` ESLint rule and Prettier (`"semi": true`).
+- **Quotes:** Use double quotes for strings (Prettier default).
+- **Trailing Commas:** Use trailing commas in multi-line arrays, objects, and function parameters.
+- **Indentation:** 2 spaces (no tabs).
+- **Formatting Commands:** Run `bun run format` after writing code. Run `bun run format:check` to verify.

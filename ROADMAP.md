@@ -35,6 +35,7 @@
 **Goal:** Project setup with Next.js, Tailwind, shadcn, Prisma, Gemini SDK.
 
 **Deliverables:**
+
 - Next.js 16 with App Router
 - Tailwind CSS 4 configured
 - 18 shadcn/ui components installed
@@ -52,6 +53,7 @@
 **Goal:** App shell with global providers and responsive layout.
 
 **Deliverables:**
+
 - Providers wrapper (QueryClientProvider, ThemeProvider, Toaster)
 - Responsive sidebar (256px desktop, hamburger mobile)
 - Main content area
@@ -71,6 +73,7 @@
 **Goal:** Define all Prisma models and run initial migration.
 
 **Deliverables:**
+
 - `File` model (id, name, size, status, pageCount, createdAt)
 - `Chunk` model (id, fileId, text, embedding vector(768), pageNumber, chunkIndex)
 - `ChatMessage` model (id, role, content, fileId, createdAt)
@@ -91,6 +94,7 @@
 **Goal:** PDF upload, text extraction, chunking, embedding generation.
 
 **Deliverables:**
+
 - Drag-and-drop upload UI
 - API route `/api/upload` + `/api/files/[fileId]` (GET, DELETE)
 - PDF text extraction (pdfjs-dist legacy build)
@@ -113,6 +117,7 @@
 **Goal:** List, select, and manage uploaded files.
 
 **Deliverables:**
+
 - File list with status indicators
 - Multi-select checkboxes for RAG context
 - Delete file functionality
@@ -128,6 +133,7 @@
 **Goal:** Conversational interface for chatting with documents.
 
 **Deliverables:**
+
 - Chat message list
 - Input textarea with send button
 - Streaming response display
@@ -143,6 +149,7 @@
 **Goal:** Vector search, context retrieval, and LLM response generation.
 
 **Deliverables:**
+
 - Query embedding generation
 - Cosine similarity search (top K chunks)
 - Context formatting for LLM prompt
@@ -159,6 +166,7 @@
 **Goal:** Error handling, loading states, edge cases, performance.
 
 **Deliverables:**
+
 - Loading skeletons for all async operations
 - Error boundaries and fallback UI
 - Empty states for lists

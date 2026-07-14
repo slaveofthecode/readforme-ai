@@ -29,10 +29,10 @@ Define the database schema with Prisma models for File, Chunk, and ChatMessage. 
 
 ```typescript
 // File status enum
-type FileStatus = "uploading" | "processing" | "ready" | "error"
+type FileStatus = "uploading" | "processing" | "ready" | "error";
 
 // Chat message role
-type MessageRole = "user" | "assistant"
+type MessageRole = "user" | "assistant";
 ```
 
 ### Data Models

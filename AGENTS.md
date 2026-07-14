@@ -64,12 +64,14 @@ When a task or milestone is successfully achieved, you MUST remind the user to u
 The `master` branch is **sacred and untouchable**. The AI is **ABSOLUTELY FORBIDDEN** from making ANY changes directly on `master` — this includes file edits, staging, commits, or any modification whatsoever.
 
 **Protocol:**
+
 1. ALWAYS create a branch before making any changes: `feat/XXX-description` or `bug/XXX-description`
 2. ALL work happens on the branch, NEVER on master
 3. Changes reach `master` ONLY through merged PRs
 4. If the AI is already on `master`, it MUST create a branch first before editing any file
 
 **This applies to ALL types of changes:**
+
 - Feature code
 - Bug fixes
 - Harness improvements (agents, skills, commands, documentation)

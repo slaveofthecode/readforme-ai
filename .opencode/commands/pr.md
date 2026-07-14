@@ -13,12 +13,14 @@ Create a Pull Request for this branch. Do NOT ask the user anything.
 4. Format the description as:
 
    ## Description
+
    [summary]
 
    ## Changes
    - [list of changes from commits]
 
    ## Files
+
    [list of changed files]
 
 5. Create the PR with `gh pr create --base master --title "<branch>" --body "<description>" --assignee "<user>"`
