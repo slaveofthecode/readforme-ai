@@ -106,8 +106,8 @@ src/
 
 ### Current Session
 
-- **Active Branch:** `master` — All PRs merged
-- **Last Task Completed:** feat/002-layout-providers merged, bug/005-hydration-fix merged, bug/006-roadmap-status-tracking merged
-- **Next Task:** Start `feat/003-database-schema` (next in roadmap)
+- **Active Branch:** `feat/004-file-upload` — All verification passed, ready for commit/push/PR
+- **Last Task Completed:** feat/004-file-upload (PDF upload, text extraction, chunking, embeddings, async processing)
+- **Next Task:** Commit, push, and create PR for feat/004-file-upload, then start feat/005-file-management
 - **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master` (harness improvements = `bug/`)
 - **Blockers:** None
