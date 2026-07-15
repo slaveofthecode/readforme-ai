@@ -3,7 +3,7 @@ import { gemini } from "@/lib/gemini";
 import { generateQueryEmbedding } from "@/lib/embedding";
 import { searchSimilarChunks } from "@/lib/vector-search";
 
-const CHAT_MODEL = "gemini-1.5-flash";
+const CHAT_MODEL = "gemini-3-flash-preview";
 
 function buildPrompt(question: string, context: string): string {
   return `You are an assistant that answers questions based on the provided documents.

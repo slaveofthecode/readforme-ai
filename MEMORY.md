@@ -12,7 +12,7 @@
 - **Data Fetching:** TanStack Query (server state)
 - **ORM:** Prisma
 - **Database:** PostgreSQL + pgvector (vector embeddings)
-- **LLM Provider:** Google Gemini (free tier)
+- **LLM Provider:** Google Gemini — `gemini-3-flash-preview` (chat), `gemini-embedding-001` (embeddings)
 - **API Layer:** Next.js API Routes (REST)
 - **Testing Framework:** Bun Test (`bun test` native runner)
 - **Linting:** ESLint + Prettier
@@ -106,8 +106,8 @@ src/
 
 ### Current Session
 
-- **Active Branch:** `feat/004-file-upload` — All verification passed, ready for commit/push/PR
-- **Last Task Completed:** feat/004-file-upload (PDF upload, text extraction, chunking, embeddings, async processing)
-- **Next Task:** Commit, push, and create PR for feat/004-file-upload, then start feat/005-file-management
+- **Active Branch:** `master` — All features complete
+- **Last Task Completed:** feat/008-polish (error boundaries, toast validation, memoization, streaming cleanup)
+- **Next Task:** None — all roadmap features completed
 - **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master` (harness improvements = `bug/`)
 - **Blockers:** None

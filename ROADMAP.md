@@ -14,10 +14,10 @@
 | 002 | Layout & Providers    | `feat/002-layout-providers` | ✅ completed | 001        | `.harness/specs/002-layout-providers.md` |
 | 003 | Database Schema       | `feat/003-database-schema`  | ✅ completed | 002        | `.harness/specs/003-database-schema.md`  |
 | 004 | File Upload           | `feat/004-file-upload`      | ✅ completed | 002, 003   | `.harness/specs/004-file-upload.md`      |
-| 005 | File Management       | `feat/005-file-management`  | ⏳ pending   | 002, 003   | `.harness/specs/005-file-management.md`  |
-| 006 | Chat UI               | `feat/006-chat-ui`          | ⏳ pending   | 002        | `.harness/specs/006-chat-ui.md`          |
-| 007 | RAG Pipeline          | `feat/007-rag-pipeline`     | ⏳ pending   | 003, 006   | `.harness/specs/007-rag-pipeline.md`     |
-| 008 | Polish & Optimization | `feat/008-polish`           | ⏳ pending   | All        | —                                        |
+| 005 | File Management       | `feat/005-file-management`  | ✅ completed | 002, 003   | `.harness/specs/005-file-management.md`  |
+| 006 | Chat UI               | `feat/006-chat-ui`          | ✅ completed | 002        | `.harness/specs/006-chat-ui.md`          |
+| 007 | RAG Pipeline          | `feat/007-rag-pipeline`     | ✅ completed | 003, 006   | `.harness/specs/007-rag-pipeline.md`     |
+| 008 | Polish & Optimization | `feat/008-polish`           | ✅ completed | All        | —                                        |
 
 ### Status Legend
 
@@ -161,7 +161,7 @@
 
 ---
 
-### 008 — Polish & Optimization ⏳
+### 008 — Polish & Optimization ✅
 
 **Goal:** Error handling, loading states, edge cases, performance.
 
@@ -173,6 +173,8 @@
 - Rate limit handling for Gemini API
 - PDF processing error handling
 - Performance optimization (lazy loading, memoization)
+
+**Completed:** 2026-07-15
 
 ---
 

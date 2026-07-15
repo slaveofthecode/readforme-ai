@@ -79,6 +79,8 @@ export function useChat() {
     },
     onError: () => {
       updateLastMessage("Sorry, something went wrong. Please try again.");
+    },
+    onSettled: () => {
       setStreaming(false);
     },
   });

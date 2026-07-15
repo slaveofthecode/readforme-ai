@@ -160,3 +160,13 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Fix:** Wrapped `mutateAsync` in try/catch, showed error via sonner toast, and prevented dialog from closing on error
 - **Lesson:** Always handle mutation errors with user-visible feedback (toast, inline error). Silent failures leave users confused about what happened.
 - **Author:** AI
+
+## feat/008-polish — 2026-07-15
+
+### Error: Gemini 1.5 Flash model deprecated, returns 404 on generateContent
+
+- **Context:** `Error fetching from .../models/gemini-1.5-flash:streamGenerateContent?alt=sse: [404] models/gemini-1.5-flash is not found for API version v1beta` when calling chat API
+- **Cause:** Google deprecated `gemini-1.5-flash` in the v1beta API, same pattern as the earlier `text-embedding-004` deprecation
+- **Fix:** Switched to `gemini-3-flash-preview` (latest 3-series Flash model with free tier, 1M context)
+- **Lesson:** Google regularly deprecates Gemini models. Always verify model availability before using. As of July 2026: chat model is `gemini-3-flash-preview`, embedding model is `gemini-embedding-001`. Check https://ai.google.dev/gemini-api/docs/models for current list.
+- **Author:** AI
