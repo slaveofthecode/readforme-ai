@@ -10,6 +10,13 @@ export interface ChatRequest {
   fileIds: string[];
 }
 
+export interface ChatSource {
+  fileName: string;
+  pageNumber: number;
+  text: string;
+}
+
 export interface ChatResponse {
   content: string;
+  sources: ChatSource[];
 }

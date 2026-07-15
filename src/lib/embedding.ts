@@ -74,3 +74,52 @@ export async function generateEmbeddings(texts: string[]): Promise<number[][]> {
 
   return allEmbeddings;
 }
+
+async function embedSingleWithRetry(
+  text: string,
+  taskType: string,
+  retryCount = 0,
+): Promise<number[]> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) throw new Error("GEMINI_API_KEY is not set");
+
+  try {
+    const response = await fetch(
+      `${GEMINI_API_URL}/models/${EMBEDDING_MODEL}:embedContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: `models/${EMBEDDING_MODEL}`,
+          content: { parts: [{ text }] },
+          taskType,
+          outputDimensionality: EMBEDDING_DIMENSIONS,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      throw new Error(
+        `Gemini API error: ${response.status} ${response.statusText} - ${errorBody}`,
+      );
+    }
+
+    const data = (await response.json()) as { embedding: { values: number[] } };
+    return data.embedding.values;
+  } catch (error: unknown) {
+    const isRateLimit = error instanceof Error && error.message.includes("429");
+
+    if (isRateLimit && retryCount < MAX_RETRIES) {
+      const delay = INITIAL_RETRY_DELAY * Math.pow(2, retryCount);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      return embedSingleWithRetry(text, taskType, retryCount + 1);
+    }
+
+    throw error;
+  }
+}
+
+export async function generateQueryEmbedding(text: string): Promise<number[]> {
+  return embedSingleWithRetry(text, "RETRIEVAL_QUERY");
+}
