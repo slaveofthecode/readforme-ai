@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Menu, BookOpen } from "lucide-react";
 import { FileUpload } from "@/features/upload/components/file-upload";
 import { FileList } from "@/features/files/components/file-list";
+import { ChatContainer } from "@/features/chat/components/chat-container";
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -68,19 +69,8 @@ export default function Home() {
         </header>
 
         {/* Content area */}
-        <div className="flex-1 overflow-auto">
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <BookOpen className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <h2 className="text-xl font-semibold text-foreground mb-2">
-                Welcome to ReadForMe AI
-              </h2>
-              <p className="text-muted-foreground max-w-md">
-                Upload PDF documents and chat with their content using
-                AI-powered RAG.
-              </p>
-            </div>
-          </div>
+        <div className="flex-1 overflow-hidden">
+          <ChatContainer />
         </div>
       </main>
     </div>
