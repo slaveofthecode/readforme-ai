@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Upload, X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
@@ -17,59 +19,66 @@ export function FileUpload() {
   const [isDragging, setIsDragging] = useState(false);
   const [uploads, setUploads] = useState<UploadState[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
 
-  const pollFileStatus = useCallback(async (fileId: string) => {
-    const maxAttempts = 60;
-    let attempts = 0;
+  const pollFileStatus = useCallback(
+    async (fileId: string) => {
+      const maxAttempts = 60;
+      let attempts = 0;
 
-    while (attempts < maxAttempts) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      while (attempts < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      try {
-        const response = await fetch(`/api/files/${fileId}`);
-        if (!response.ok) continue;
+        try {
+          const response = await fetch(`/api/files/${fileId}`);
+          if (!response.ok) continue;
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (data.status === "ready" || data.status === "error") {
-          setUploads((prev) =>
-            prev.map((u) =>
-              u.id === fileId
-                ? {
-                    ...u,
-                    status: data.status,
-                    error: data.errorMessage,
-                  }
-                : u,
-            ),
-          );
-          return;
+          if (data.status === "ready" || data.status === "error") {
+            setUploads((prev) =>
+              prev.map((u) =>
+                u.id === fileId
+                  ? {
+                      ...u,
+                      status: data.status,
+                      error: data.errorMessage,
+                    }
+                  : u,
+              ),
+            );
+            if (data.status === "ready") {
+              queryClient.invalidateQueries({ queryKey: ["files"] });
+            }
+            return;
+          }
+        } catch {
+          // Continue polling
         }
-      } catch {
-        // Continue polling
+
+        attempts++;
       }
 
-      attempts++;
-    }
-
-    setUploads((prev) =>
-      prev.map((u) =>
-        u.id === fileId
-          ? { ...u, status: "error", error: "Processing timeout" }
-          : u,
-      ),
-    );
-  }, []);
+      setUploads((prev) =>
+        prev.map((u) =>
+          u.id === fileId
+            ? { ...u, status: "error", error: "Processing timeout" }
+            : u,
+        ),
+      );
+    },
+    [queryClient],
+  );
 
   const handleFile = useCallback(
     async (file: File) => {
       if (file.type !== "application/pdf") {
-        alert("Only PDF files are allowed");
+        toast.error("Only PDF files are allowed");
         return;
       }
 
       if (file.size > 10 * 1024 * 1024) {
-        alert("File size exceeds 10MB limit");
+        toast.error("File size exceeds 10MB limit");
         return;
       }
 
@@ -140,6 +149,19 @@ export function FileUpload() {
     },
     [pollFileStatus],
   );
+
+  useEffect(() => {
+    const readyIds = uploads
+      .filter((u) => u.status === "ready")
+      .map((u) => u.id);
+    if (readyIds.length === 0) return;
+
+    const timer = setTimeout(() => {
+      setUploads((prev) => prev.filter((u) => !readyIds.includes(u.id)));
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [uploads]);
 
   const removeUpload = useCallback((id: string) => {
     setUploads((prev) => prev.filter((u) => u.id !== id));

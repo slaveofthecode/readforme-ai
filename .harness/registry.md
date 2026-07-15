@@ -22,6 +22,10 @@
 | 002 | feat | Layout & Providers        | `feat/002-layout-providers`       | completed | 2026-07-13 |
 | 003 | feat | Database Schema           | `feat/003-database-schema`        | completed | 2026-07-13 |
 | 004 | feat | File Upload               | `feat/004-file-upload`            | completed | 2026-07-14 |
+| 005 | feat | File Management           | `feat/005-file-management`        | completed | 2026-07-14 |
+| 006 | feat | Chat UI                   | `feat/006-chat-ui`                | completed | 2026-07-15 |
+| 007 | feat | RAG Pipeline              | `feat/007-rag-pipeline`           | completed | 2026-07-15 |
+| 008 | feat | Polish & Optimization     | `feat/008-polish`                 | completed | 2026-07-15 |
 
 ---
 

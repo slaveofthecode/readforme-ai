@@ -3,13 +3,15 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { AlertCircle } from "lucide-react";
 import { useFileList } from "../hooks/use-file-list";
 import { useFileSelection } from "@/stores/file-selection";
 import { FileListItem } from "./file-list-item";
 import { EmptyFileList } from "./empty-file-list";
 
 export function FileList() {
-  const { data, isLoading } = useFileList();
+  const { data, isLoading, isError, refetch } = useFileList();
   const { selectedFileIds, selectAll, clearAll } = useFileSelection();
 
   const files = data?.files ?? [];
@@ -35,6 +37,20 @@ export function FileList() {
         <Skeleton className="h-10 w-full" />
         <Skeleton className="h-10 w-full" />
         <Skeleton className="h-10 w-full" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
+        <AlertCircle className="h-8 w-8 text-muted-foreground" />
+        <p className="text-sm font-medium text-foreground">
+          Failed to load files
+        </p>
+        <Button onClick={() => refetch()} variant="outline" size="sm">
+          Try Again
+        </Button>
       </div>
     );
   }
