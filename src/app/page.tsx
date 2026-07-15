@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Menu, BookOpen } from "lucide-react"
-import { FileUpload } from "@/features/upload/components/file-upload"
+import { useState } from "react";
+import { Menu, BookOpen } from "lucide-react";
+import { FileUpload } from "@/features/upload/components/file-upload";
+import { FileList } from "@/features/files/components/file-list";
 
 export default function Home() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen bg-background">
@@ -40,11 +41,9 @@ export default function Home() {
             <FileUpload />
           </div>
 
-          {/* Navigation placeholder */}
-          <nav className="flex-1 px-4 py-4">
-            <p className="text-sm text-muted-foreground">
-              Navigation coming soon
-            </p>
+          {/* File list section */}
+          <nav className="flex-1 overflow-hidden px-4 py-4">
+            <FileList />
           </nav>
 
           {/* Footer */}
@@ -85,5 +84,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  )
+  );
 }
