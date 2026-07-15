@@ -88,6 +88,7 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 ## feat/004-file-upload — 2026-07-14
 
 ### Error: Prisma 7 Chunk model missing create/createMany methods
+
 - **Context:** Attempting to use `prisma.chunk.create()` or `prisma.chunk.createMany()` to insert chunks with vector embeddings
 - **Cause:** Prisma 7 models with `Unsupported("vector")` type columns do not expose `create` or `createMany` methods on the delegate
 - **Fix:** Use `prisma.$executeRaw` with raw SQL INSERT statements for models containing unsupported types
@@ -95,6 +96,7 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Author:** AI
 
 ### Error: React hook ordering violation (pollFileStatus accessed before declaration)
+
 - **Context:** ESLint error "Cannot access variable before it is declared" when calling `pollFileStatus` inside `handleFile` callback
 - **Cause:** `pollFileStatus` was declared after `handleFile` but called inside it, violating React's hook ordering rules
 - **Fix:** Reordered hooks so `pollFileStatus` is declared before `handleFile`, and added `pollFileStatus` to `handleFile`'s dependency array
@@ -102,6 +104,7 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Author:** AI
 
 ### Error: Gemini SDK TaskType requires enum import
+
 - **Context:** TypeScript error "Type string is not assignable to type TaskType" when using string literal "RETRIEVAL_DOCUMENT"
 - **Cause:** The Gemini SDK uses a TypeScript enum for TaskType, not string literals
 - **Fix:** Import `TaskType` from `@google/generative-ai` and use `TaskType.RETRIEVAL_DOCUMENT` instead of the string literal
@@ -109,6 +112,7 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Author:** AI
 
 ### Error: PrismaClient initialization error with Query Compiler
+
 - **Context:** `PrismaClientInitializationError` when calling API routes - "PrismaClient needs to be constructed with a non-empty, valid PrismaClientOptions"
 - **Cause:** Prisma 7 with Query Compiler enabled (default) requires a driver adapter to be passed to PrismaClient
 - **Fix:** Install `@prisma/adapter-pg` and `pg`, then initialize PrismaClient with `new PrismaPg({ connectionString: process.env.DATABASE_URL })` adapter
@@ -116,6 +120,7 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Author:** AI
 
 ### Error: pdfjs-dist DOMMatrix is not defined in Node.js
+
 - **Context:** `ReferenceError: DOMMatrix is not defined` when running pdfjs-dist in Next.js API routes (server-side)
 - **Cause:** pdfjs-dist default build uses browser APIs (DOMMatrix, Path2D) that don't exist in Node.js
 - **Fix:** Import from `pdfjs-dist/legacy/build/pdf.mjs` instead of `pdfjs-dist` to use the Node.js-compatible legacy build
@@ -123,6 +128,7 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Author:** AI
 
 ### Error: pdfjs-dist worker "No GlobalWorkerOptions.workerSrc specified" in server/test
+
 - **Context:** `Setting up fake worker failed: "No GlobalWorkerOptions.workerSrc specified"` when using pdfjs-dist in Next.js API routes and Bun tests
 - **Cause:** Setting `GlobalWorkerOptions.workerSrc = ""` doesn't actually disable the worker — pdfjs-dist still tries to create a fake worker via dynamic import, which fails in bundled environments
 - **Fix:** Use `pathToFileURL(resolve(process.cwd(), "node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs")).href` to get an absolute file URL. `createRequire().resolve()` fails in Turbopack, `new URL(..., import.meta.url)` resolves relative to source file (not node_modules) in Bun tests, and `import.meta.resolve()` is unsupported in Turbopack
@@ -130,8 +136,27 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Author:** AI
 
 ### Error: Gemini text-embedding-004 deprecated, returns 404
+
 - **Context:** `Error fetching from .../models/text-embedding-004: [404] models/text-embedding-004 is not found for API version v1beta` during embedding generation
 - **Cause:** Google deprecated `text-embedding-004` and `embedding-001` models in February 2026, removing them from the v1beta API
 - **Fix:** Switch to `gemini-embedding-001` model. Use raw REST API (`batchEmbedContents`) instead of SDK because `@google/generative-ai` v0.24.1 doesn't support `outputDimensionality` parameter needed to reduce dimensions from 3072 to 768
 - **Lesson:** Always check Gemini model deprecation status. For embedding dimensionality reduction, use raw REST API when the SDK doesn't support the parameter. Model name: `gemini-embedding-001` (not `text-embedding-004`)
+- **Author:** AI
+
+## feat/005-file-management — 2026-07-14
+
+### Error: Stale selectedFileIds after file deletion
+
+- **Context:** When files are deleted via the sidebar, their IDs remain in the Zustand `selectedFileIds` store, causing stale selection state
+- **Cause:** The `useDeleteFile` hook invalidates the `["files"]` query but doesn't clean up the `selectedFileIds` in the Zustand store. No `removeFiles` action existed on the store.
+- **Fix:** Added `removeFiles(ids: string[])` action to the Zustand store, and called it from `useDeleteFile.onSuccess` to clean up deleted file IDs from selection
+- **Lesson:** When implementing delete mutations that affect shared client state (Zustand stores, selected items, etc.), always clean up related state in the mutation's `onSuccess` callback. Query invalidation only refreshes server state — client-side state (Zustand, local state) must be cleaned up separately.
+- **Author:** AI
+
+### Error: No error feedback on failed delete mutation
+
+- **Context:** If the delete mutation fails, the confirmation dialog stays open with no error feedback to the user
+- **Cause:** `handleDelete` calls `mutateAsync` but doesn't catch errors, and there's no error state displayed in the dialog
+- **Fix:** Wrapped `mutateAsync` in try/catch, showed error via sonner toast, and prevented dialog from closing on error
+- **Lesson:** Always handle mutation errors with user-visible feedback (toast, inline error). Silent failures leave users confused about what happened.
 - **Author:** AI
