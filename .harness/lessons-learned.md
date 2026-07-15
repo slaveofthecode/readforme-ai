@@ -161,7 +161,15 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Lesson:** Always handle mutation errors with user-visible feedback (toast, inline error). Silent failures leave users confused about what happened.
 - **Author:** AI
 
-## feat/008-polish — 2026-07-15
+## feat/008-polish (embedding fix) — 2026-07-15
+
+### Error: Gemini embedding quota exhausted (429) on large PDFs
+
+- **Context:** Uploading a 95-page PDF (115 chunks) triggers `RESOURCE_EXHAUSTED` 429 error from Gemini embedding API
+- **Cause:** `BATCH_SIZE=100` was too aggressive for the free tier — a single batch of 100 embedding requests exceeds the per-minute quota. No delay between batches compounds the issue.
+- **Fix:** Reduced `BATCH_SIZE` from 100 → 20, added 1s delay between batches, increased `MAX_RETRIES` from 3 → 5, increased base retry delay from 1s → 5s (backoff: 5s/10s/20s/40s/80s)
+- **Lesson:** Gemini free tier has strict per-minute and per-day embedding quotas. For large documents, use small batch sizes (20), add inter-batch delays, and use longer retry backoffs (5s base) to stay within limits. A 95-page PDF with 2000-char chunks produces ~115 chunks — that's 6 batches of 20 with 1s delays = ~6 seconds of embedding work.
+- **Author:** AI
 
 ### Error: Gemini 1.5 Flash model deprecated, returns 404 on generateContent
 
