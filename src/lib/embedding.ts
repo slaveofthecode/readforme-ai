@@ -1,8 +1,8 @@
 const EMBEDDING_MODEL = "gemini-embedding-001";
 const EMBEDDING_DIMENSIONS = 768;
 const BATCH_SIZE = 20;
-const MAX_RETRIES = 5;
-const INITIAL_RETRY_DELAY = 5000;
+const MAX_RETRIES = 3;
+const INITIAL_RETRY_DELAY = 2000;
 
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta";
 
