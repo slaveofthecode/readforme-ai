@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 import fs from "fs/promises";
 import path from "path";
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const UPLOAD_DIR = path.join(process.cwd(), "uploads");
 
 export async function POST(request: NextRequest) {

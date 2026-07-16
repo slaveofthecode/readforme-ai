@@ -23,7 +23,7 @@ export function FileUpload() {
 
   const pollFileStatus = useCallback(
     async (fileId: string) => {
-      const maxAttempts = 60;
+      const maxAttempts = 90;
       let attempts = 0;
 
       while (attempts < maxAttempts) {
@@ -77,8 +77,8 @@ export function FileUpload() {
         return;
       }
 
-      if (file.size > 10 * 1024 * 1024) {
-        toast.error("File size exceeds 10MB limit");
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size exceeds 5MB limit");
         return;
       }
 
@@ -226,7 +226,7 @@ export function FileUpload() {
       >
         <Upload className="h-6 w-6 mx-auto mb-2" />
         <p>Drop PDF here or click to upload</p>
-        <p className="text-xs mt-1">Max 10MB</p>
+        <p className="text-xs mt-1">Max 5MB</p>
       </button>
 
       {uploads.length > 0 && (

@@ -54,8 +54,12 @@ export async function processUpload(fileId: string): Promise<void> {
   } catch (error) {
     console.error(`[UploadProcessor] Error processing file ${fileId}:`, error);
 
-    const message =
+    const raw =
       error instanceof Error ? error.message : "Unknown processing error";
+    const message =
+      raw.includes("429") || raw.includes("RESOURCE_EXHAUSTED")
+        ? "AI service quota exhausted. Please try again later."
+        : raw;
 
     await prisma.file.update({
       where: { id: fileId },

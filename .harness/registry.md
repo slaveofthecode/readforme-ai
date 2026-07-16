@@ -101,6 +101,7 @@
 | feat/004 | pdfjs-dist DOMMatrix not defined in Node.js                 | Import from `pdfjs-dist/legacy/build/pdf.mjs` for server-side usage                                                                                    | AI     |
 | feat/004 | pdfjs-dist worker fails in bundled environments             | Use `pathToFileURL(resolve(process.cwd(), "node_modules/...")).href` for worker path — works in both Turbopack and Bun tests                           | AI     |
 | feat/004 | Gemini text-embedding-004 deprecated (404)                  | Use `gemini-embedding-001` with raw REST API for `outputDimensionality` support (SDK v0.24.1 lacks it)                                                 | AI     |
+| bug/008  | Committed/pushed without explicit user authorization        | "Go!", "yes", "apply" do NOT authorize git write operations. Each action (commit, push, PR) requires separate explicit authorization.                  | AI     |
 
 <!-- Example:
 | feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |

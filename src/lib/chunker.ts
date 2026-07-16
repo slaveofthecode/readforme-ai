@@ -11,8 +11,8 @@ interface ChunkOptions {
   overlap?: number;
 }
 
-const DEFAULT_CHUNK_SIZE = 2000;
-const DEFAULT_OVERLAP = 300;
+const DEFAULT_CHUNK_SIZE = 4000;
+const DEFAULT_OVERLAP = 400;
 
 export function chunkText(
   pages: ExtractedPage[],

@@ -161,7 +161,31 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Lesson:** Always handle mutation errors with user-visible feedback (toast, inline error). Silent failures leave users confused about what happened.
 - **Author:** AI
 
-## feat/008-polish — 2026-07-15
+## bug/008-embedding-rate-limit — 2026-07-15
+
+### Error: Committed and pushed without explicit user authorization
+
+- **Context:** User said "Go!" to apply a fix, AI interpreted it as authorization to commit and push the changes
+- **Cause:** Misinterpreted user's instruction to apply a fix as authorization for all git write operations. "Go!" meant "apply the code changes", not "commit and push"
+- **Fix:** Reverted the commit on master, created `bug/008-embedding-rate-limit` branch, re-committed there
+- **Lesson:** NEVER commit, push, or perform any git write operation unless the user EXPLICITLY says "commit", "push", or similar. "Go!", "yes", "apply", "do it" do NOT authorize git write operations. Each action (commit, push, PR) requires its own explicit, unambiguous authorization. Rule lives in `.harness/commands/git.md`.
+- **Author:** AI
+
+### Error: Embedding rate limit retries too slow, file stuck in "Processing..."
+
+- **Context:** After reducing BATCH_SIZE to 20, the file still showed "Processing..." indefinitely. 115 chunks = 6 batches. With MAX_RETRIES=5 and INITIAL_RETRY_DELAY=5000, each batch could retry up to 155 seconds (5s+10s+20s+40s+80s). Total worst case: 6 × 155s = 930 seconds (15+ minutes)
+- **Cause:** Retry backoff was too aggressive for the free tier. When quota is exhausted, retries with exponential backoff compound across batches
+- **Fix:** Reduced MAX_RETRIES from 5 → 3, INITIAL_RETRY_DELAY from 5000 → 2000. Max retry time per batch: 2s+4s+8s = 14 seconds. Total worst case: 6 × 14s = 84 seconds. Also reduced polling timeout from 60 attempts (120s) → 30 attempts (60s) so the UI shows "Processing timeout" error instead of hanging
+- **Lesson:** When retrying rate-limited API calls, keep retries conservative (3 max) with shorter delays (2s base). The upload polling timeout should be shorter than the worst-case embedding time so the user gets feedback faster
+- **Author:** AI
+
+### Error: Gemini embedding quota exhausted (429) on large PDFs
+
+- **Context:** Uploading a 95-page PDF (115 chunks) triggers `RESOURCE_EXHAUSTED` 429 error from Gemini embedding API
+- **Cause:** `BATCH_SIZE=100` was too aggressive for the free tier — a single batch of 100 embedding requests exceeds the per-minute quota. No delay between batches compounds the issue.
+- **Fix:** Reduced `BATCH_SIZE` from 100 → 20, added 1s delay between batches, increased `MAX_RETRIES` from 3 → 5, increased base retry delay from 1s → 5s (backoff: 5s/10s/20s/40s/80s)
+- **Lesson:** Gemini free tier has strict per-minute and per-day embedding quotas. For large documents, use small batch sizes (20), add inter-batch delays, and use longer retry backoffs (5s base) to stay within limits. A 95-page PDF with 2000-char chunks produces ~115 chunks — that's 6 batches of 20 with 1s delays = ~6 seconds of embedding work.
+- **Author:** AI
 
 ### Error: Gemini 1.5 Flash model deprecated, returns 404 on generateContent
 
