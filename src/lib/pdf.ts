@@ -1,3 +1,4 @@
+import "./server-polyfills";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import { pathToFileURL } from "url";
 import { resolve } from "path";
