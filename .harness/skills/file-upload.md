@@ -4,7 +4,7 @@
 
 - Use a shadcn component or custom drop zone for drag-and-drop file input.
 - Accept only PDF files (`accept=".pdf"` and MIME type `application/pdf`).
-- Validate file size client-side before uploading (recommended max: 10MB per file).
+- Validate file size client-side before uploading (recommended max: 5MB per file).
 - Show upload progress with a progress bar during the upload.
 
 ## 2. Next.js Route Handler
