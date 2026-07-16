@@ -194,3 +194,13 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Fix:** Switched to `gemini-3-flash-preview` (latest 3-series Flash model with free tier, 1M context)
 - **Lesson:** Google regularly deprecates Gemini models. Always verify model availability before using. As of July 2026: chat model is `gemini-3-flash-preview`, embedding model is `gemini-embedding-001`. Check https://ai.google.dev/gemini-api/docs/models for current list.
 - **Author:** AI
+
+## bug/009-dommatrix-polyfill — 2026-07-16
+
+### Error: Made edits on master branch despite branch protection rules existing
+
+- **Context:** User requested fix for `DOMMatrix is not defined` production error. AI implemented the fix (3 file changes) directly on `master` without creating a branch first
+- **Cause:** Rules exist in `git.md` section 2 and `AGENTS.md` section 7, but the AI jumped straight to editing files after plan approval without running `git branch --show-current` first. The protocol lacks an explicit "verify branch BEFORE any file operation" step
+- **Fix:** Created `fix/pdf-upload-dommatrix-polyfill` branch, moved changes there. Master was restored to clean state
+- **Lesson:** BEFORE editing ANY file, the AI MUST run `git branch --show-current`. If the result is `master`, it MUST create a branch via `git checkout -b <branch-name>` BEFORE touching any file. This check is non-negotiable and must happen as the very first action after plan approval — not after edits are already made
+- **Author:** AI
