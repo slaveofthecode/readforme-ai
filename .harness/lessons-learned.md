@@ -195,6 +195,14 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Lesson:** Google regularly deprecates Gemini models. Always verify model availability before using. As of July 2026: chat model is `gemini-3-flash-preview`, embedding model is `gemini-embedding-001`. Check https://ai.google.dev/gemini-api/docs/models for current list.
 - **Author:** AI
 
+## bug/011-upload-timeout-optimization — 2026-07-16
+
+### Error: Upload processing times out on Vercel Hobby (60s limit)
+
+- **Context:** 949KB PDF upload stuck in "Processing..." for 3+ minutes, then shows "Processing timeout". No logs in Vercel because the serverless function was killed
+- **Cause:** Two issues: (1) `processUpload` was fire-and-forget — when Vercel kills the function after 60s, all async work dies silently. (2) Embedding pipeline too slow: BATCH_SIZE=20 with 1s delays and 3 retries × 2s base delay = 60-120+ seconds with rate limiting
+- **Fix:** Made `processUpload` synchronous (await) so the function stays alive during processing. Added `maxDuration = 60` export. Optimized embeddings: BATCH_SIZE 20→50, delay 1s→0.5s, retries 3→2, base delay 2s→1s. Increased client polling from 90→150 attempts (5 min)
+- **Lesson:** On Vercel Hobby (60s timeout), fire-and-forget async processing gets silently killed. Processing must be synchronous (await) so the function context stays alive. Optimize embedding pipeline to fit within the timeout: larger batches, shorter delays, fewer retries
 ## bug/010-upload-vercel-filesystem — 2026-07-16
 
 ### Error: Logic change not reflected in documentation

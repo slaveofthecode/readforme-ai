@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { processUpload } from "@/lib/upload-processor";
 import { randomUUID } from "crypto";
 
+export const maxDuration = 60;
+
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
@@ -42,12 +44,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    processUpload(fileId, buffer).catch(console.error);
+    await processUpload(fileId, buffer);
 
     return NextResponse.json({
       id: dbFile.id,
       name: dbFile.name,
-      status: dbFile.status,
+      status: "ready",
     });
   } catch (error) {
     console.error("Upload error:", error);

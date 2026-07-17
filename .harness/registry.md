@@ -105,6 +105,7 @@
 | bug/008  | Committed/pushed without explicit user authorization        | "Go!", "yes", "apply" do NOT authorize git write operations. Each action (commit, push, PR) requires separate explicit authorization.                  | AI     |
 | bug/009  | Made edits on master despite rules existing                 | BEFORE editing ANY file, run `git branch --show-current`. If `master`, create branch FIRST. Non-negotiable pre-flight check.                           | AI     |
 | bug/010  | Logic changes without documentation updates                 | When changing logic, scan `.harness/skills/` and `.harness/specs/` for affected docs. Update in same changeset.                                        | AI     |
+| bug/011  | Upload timeout on Vercel Hobby (60s limit)                  | Processing must be synchronous (await), not fire-and-forget. Optimize embeddings: larger batches, shorter delays, fewer retries.                        | AI     |
 
 <!-- Example:
 | feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |

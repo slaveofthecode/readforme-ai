@@ -23,7 +23,7 @@ export function FileUpload() {
 
   const pollFileStatus = useCallback(
     async (fileId: string) => {
-      const maxAttempts = 90;
+      const maxAttempts = 150;
       let attempts = 0;
 
       while (attempts < maxAttempts) {

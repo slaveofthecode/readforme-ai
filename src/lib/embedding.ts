@@ -1,8 +1,8 @@
 const EMBEDDING_MODEL = "gemini-embedding-001";
 const EMBEDDING_DIMENSIONS = 768;
-const BATCH_SIZE = 20;
-const MAX_RETRIES = 3;
-const INITIAL_RETRY_DELAY = 2000;
+const BATCH_SIZE = 50;
+const MAX_RETRIES = 2;
+const INITIAL_RETRY_DELAY = 1000;
 
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta";
 
@@ -71,7 +71,7 @@ export async function generateEmbeddings(texts: string[]): Promise<number[][]> {
     const batchEmbeddings = await embedBatchWithRetry(batch);
     allEmbeddings.push(...batchEmbeddings);
     if (i + BATCH_SIZE < texts.length) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
 
