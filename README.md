@@ -19,7 +19,7 @@ This project follows a combination of **SDD (Specification-Driven Development)**
 1. The **architect** sub-agent is invoked first for any new feature or bug fix
 2. The architect defines:
    - TypeScript interfaces and types (no `any` allowed)
-   - Prisma schema models (tables, relations, indexes)
+   - Data models and database schemas (tables, relations, indexes)
    - File tree proposals (where new files go)
    - API contract definitions (request/response shapes)
 3. Only AFTER the specifications are defined, the implementation agents (`frontend`, `backend`, `ui-expert`) begin coding
@@ -29,7 +29,7 @@ This project follows a combination of **SDD (Specification-Driven Development)**
 
 ```text
 User: "Add file upload feature"
-  → Architect defines: UploadFile type, FileChunk interface, Prisma File model
+  → Architect defines: UploadFile type, FileChunk interface, Database schema
   → Backend implements API route following the contract
   → Frontend implements hooks following the type definitions
   → Tester writes tests against the specifications
@@ -41,20 +41,19 @@ User: "Add file upload feature"
 
 **How it's implemented:**
 
-1. The **tester** sub-agent writes unit tests using `bun:test`
+1. The **tester** sub-agent writes unit tests using the project's native test framework
 2. Tests cover:
    - Happy path (expected behavior)
    - Edge cases (empty states, null values, incorrect inputs)
    - Error handling (network failures, validation errors)
-3. Tests are executed via `bun test` before any task is considered complete
+3. Tests are executed via the project's test command before any task is considered complete
 4. If any test fails, the AI MUST fix the issue and re-run until all tests pass
 
 **Verification commands:**
 
 ```bash
-bun test                    # Run all tests
-bun test --watch            # Watch mode
-bun test ./path/to/test.ts  # Specific test file
+# Execute the project's test runner (e.g., bun test, npm test, pytest)
+<test command>
 ```
 
 ### Clean Code + SRP
@@ -104,9 +103,9 @@ The appropriate sub-agents (`frontend`, `backend`, `ui-expert`) implement the co
 Run verification commands:
 
 ```bash
-bun run lint       # Code style
-bun x tsc --noEmit # Type safety
-bun test           # Unit tests
+<lint command>       # Check code style (e.g., eslint, ruff)
+<typecheck command>  # Check type safety (e.g., tsc)
+<test command>       # Run unit tests
 ```
 
 ### Step 7: Register
@@ -158,9 +157,9 @@ Analyze the bug and document:
 Apply the fix and run all verification commands:
 
 ```bash
-bun run lint
-bun x tsc --noEmit
-bun test
+<lint command>
+<typecheck command>
+<test command>
 ```
 
 ### Step 4: Register in registry.md
@@ -215,7 +214,7 @@ bug/002-branch-naming     # Second bug fix: branch naming inconsistency
 
 ## Harness Architecture
 
-The harness is divided into five modular pillars:
+The harness is divided into seven modular pillars:
 
 ### 1. Continuous Project State (`MEMORY.md`)
 
@@ -238,13 +237,13 @@ The harness is divided into five modular pillars:
 
 - Philosophical guardrails for the codebase
 - Define HOW code must be written (Mobile-First, Type-Safety, SRP)
-- Skills: `clean-code.md`, `atomic-ui.md`, `shadcn-ui.md`, `zustand.md`, etc.
+- Contains modular skill files outlining patterns for state, UI, database, etc.
 
 ### 5. Atomic Specialized Sub-Agents (`.harness/agents/`)
 
 - Hyper-focused contextual profiles
 - Complex tasks broken into atomic steps
-- Agents: `architect`, `ui-expert`, `frontend`, `backend`, `tester`, `ai-engineer`
+- Profiles: `architect`, `ui-expert`, `frontend`, `backend`, `tester`, `ai-engineer`
 
 ### 6. AI Learning Memory (`.harness/registry.md`)
 
@@ -252,6 +251,14 @@ The harness is divided into five modular pillars:
 - Patterns learned, anti-patterns to avoid
 - Architecture decisions and rationale
 - Environment-specific findings
+
+### 7. Feature Specifications (`.harness/specs/`)
+
+- Versioned specification files for each feature
+- Structure: `.harness/specs/<version>/<feature-id>-<feature-name>.md`
+- `TEMPLATE.md` at root defines the spec format
+- Example: `.harness/specs/v1.0.0/009-new-feature.md`
+- When creating a new spec, ALWAYS use the current version folder
 
 ---
 
@@ -266,79 +273,9 @@ The harness is divided into five modular pillars:
 
 ---
 
-## Sub-Agent Profiles
-
-| Agent           | Responsibility                                              |
-| --------------- | ----------------------------------------------------------- |
-| **architect**   | Types, interfaces, file tree, data contracts, Prisma schema |
-| **ui-expert**   | Tailwind layouts, semantic HTML, a11y, Shadcn/ui            |
-| **frontend**    | Zustand stores, TanStack Query hooks, side-effects          |
-| **backend**     | API Routes, Prisma queries, file handling, LLM integration  |
-| **tester**      | Unit tests with `bun:test`, integration tests               |
-| **ai-engineer** | RAG pipeline, embeddings, prompts, Gemini integration       |
-
----
-
-## Verification Commands
-
-| Command                   | Purpose               | When to Run                   |
-| ------------------------- | --------------------- | ----------------------------- |
-| `bun run lint`            | Check code style      | After UI changes or refactors |
-| `bun run lint:fix`        | Auto-fix style issues | When lint fails               |
-| `bun x tsc --noEmit`      | Type checking         | Before completing any task    |
-| `bun test`                | Run unit tests        | After logic/state changes     |
-| `bunx prisma migrate dev` | Create migration      | After schema changes          |
-| `bunx prisma generate`    | Regenerate client     | After migrations              |
-
----
-
-## Stack
-
-| Layer                | Technology                    |
-| -------------------- | ----------------------------- |
-| **Framework**        | Next.js (App Router)          |
-| **Runtime**          | Bun                           |
-| **Language**         | TypeScript (Strict Mode)      |
-| **Frontend**         | React                         |
-| **Styling**          | Tailwind CSS                  |
-| **UI Components**    | Shadcn/ui                     |
-| **State Management** | Zustand (UI state)            |
-| **Data Fetching**    | TanStack Query (server state) |
-| **ORM**              | Prisma                        |
-| **Database**         | PostgreSQL + pgvector         |
-| **LLM**              | Google Gemini (free tier)     |
-| **API Layer**        | Next.js API Routes (REST)     |
-| **Testing**          | Bun Test (`bun:test`)         |
-| **Linting**          | ESLint + Prettier             |
-
----
-
-## Directory Structure
-
-```text
-src/
-├── app/                    # Next.js App Router (pages, layouts, API routes)
-├── components/             # Shared global UI components (Shadcn/ui)
-│   ├── providers/          # React context providers
-│   └── ui/                 # Shadcn/ui components
-├── features/               # Modular domain-driven features
-│   ├── chat/               # Chat interface feature
-│   ├── files/              # File management feature
-│   └── upload/             # File upload feature
-├── stores/                 # Global Zustand stores
-└── lib/
-    ├── prisma.ts           # Prisma client singleton
-    ├── pdf.ts              # PDF parsing utilities
-    ├── embedding.ts        # Embedding generation (Gemini)
-    ├── gemini.ts           # Gemini SDK client
-    ├── chunker.ts          # Text chunking for RAG
-    ├── vector-search.ts    # Vector similarity search
-    └── utils.ts            # Utility functions (cn, etc.)
-```
-
 ### Naming Conventions
 
 - **Directories:** `kebab-case`
-- **React Components:** `PascalCase.tsx`
-- **Hooks/Utilities:** `camelCase.ts`
+- **React Components:** `PascalCase`
+- **Hooks/Utilities:** `camelCase`
 - **Styles/Assets:** `kebab-case`
