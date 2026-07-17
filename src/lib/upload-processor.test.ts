@@ -9,7 +9,7 @@ function createMockFile(overrides: Partial<File> = {}): File {
     size: 1024,
     status: "pending",
     pageCount: null,
-    filePath: "/fake/path.pdf",
+    filePath: null,
     errorMessage: null,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -26,13 +26,9 @@ const mockPrisma = {
   $executeRaw: mock(() => Promise.resolve(0)),
 };
 
-const mockReadFile = mock(() => Promise.resolve(Buffer.from("fake pdf")));
-
 mock.module("@/lib/prisma", () => ({ prisma: mockPrisma }));
-mock.module("fs/promises", () => ({
-  default: { readFile: mockReadFile },
-  readFile: mockReadFile,
-}));
+
+const fakeBuffer = Buffer.from("fake pdf");
 
 const pdfModule = await import("./pdf");
 const chunkerModule = await import("./chunker");
@@ -62,13 +58,12 @@ describe("processUpload", () => {
     mockPrisma.file.findUnique.mockClear();
     mockPrisma.file.update.mockClear();
     mockPrisma.$executeRaw.mockClear();
-    mockReadFile.mockClear();
     mockPdf.mockClear();
     mockChunk.mockClear();
     mockEmbed.mockClear();
 
     mockPrisma.file.findUnique.mockResolvedValue(
-      createMockFile({ id: "test-id", filePath: "/fake/path.pdf" }),
+      createMockFile({ id: "test-id" }),
     );
     mockPdf.mockResolvedValue({
       pages: [{ pageNumber: 1, text: "Test content" }],
@@ -81,7 +76,7 @@ describe("processUpload", () => {
   });
 
   test("updates file status to processing then ready on success", async () => {
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
 
     const updateCalls = mockPrisma.file.update.mock.calls as any[];
     expect(updateCalls.length).toBeGreaterThanOrEqual(2);
@@ -98,7 +93,7 @@ describe("processUpload", () => {
   test("updates file status to error when file not found", async () => {
     mockPrisma.file.findUnique.mockResolvedValue(null);
 
-    await processUpload("nonexistent-id");
+    await processUpload("nonexistent-id", fakeBuffer);
 
     const updateCalls = mockPrisma.file.update.mock.calls as any[];
     const lastCall = updateCalls[updateCalls.length - 1][0];
@@ -109,7 +104,7 @@ describe("processUpload", () => {
   });
 
   test("updates pageCount during processing", async () => {
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
 
     const updateCalls = mockPrisma.file.update.mock.calls as any[];
     const pageCountCall = updateCalls.find(
@@ -119,17 +114,12 @@ describe("processUpload", () => {
   });
 
   test("inserts chunks via raw SQL", async () => {
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
     expect(mockPrisma.$executeRaw).toHaveBeenCalled();
   });
 
-  test("reads file from disk", async () => {
-    await processUpload("test-id");
-    expect(mockReadFile).toHaveBeenCalledWith("/fake/path.pdf");
-  });
-
   test("extracts text, chunks, and embeds", async () => {
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
 
     expect(mockPdf).toHaveBeenCalled();
     expect(mockChunk).toHaveBeenCalled();
@@ -139,7 +129,7 @@ describe("processUpload", () => {
   test("handles extraction error gracefully", async () => {
     mockPdf.mockRejectedValue(new Error("Invalid PDF"));
 
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
 
     const updateCalls = mockPrisma.file.update.mock.calls as any[];
     const lastCall = updateCalls[updateCalls.length - 1][0];
@@ -150,7 +140,7 @@ describe("processUpload", () => {
   test("handles embedding error gracefully", async () => {
     mockEmbed.mockRejectedValue(new Error("API rate limit"));
 
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
 
     const updateCalls = mockPrisma.file.update.mock.calls as any[];
     const lastCall = updateCalls[updateCalls.length - 1][0];
@@ -163,11 +153,7 @@ describe("processUpload", () => {
 
     mockPrisma.file.findUnique.mockImplementation(async () => {
       callOrder.push("findUnique");
-      return createMockFile({ id: "test-id", filePath: "/fake/path.pdf" });
-    });
-    mockReadFile.mockImplementation(async () => {
-      callOrder.push("readFile");
-      return Buffer.from("pdf content");
+      return createMockFile({ id: "test-id" });
     });
     mockPdf.mockImplementation(async () => {
       callOrder.push("extractText");
@@ -185,11 +171,10 @@ describe("processUpload", () => {
       return [[0.1]];
     });
 
-    await processUpload("test-id");
+    await processUpload("test-id", fakeBuffer);
 
     expect(callOrder).toEqual([
       "findUnique",
-      "readFile",
       "extractText",
       "chunkText",
       "generateEmbeddings",

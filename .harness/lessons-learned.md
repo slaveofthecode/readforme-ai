@@ -194,3 +194,13 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Fix:** Switched to `gemini-3-flash-preview` (latest 3-series Flash model with free tier, 1M context)
 - **Lesson:** Google regularly deprecates Gemini models. Always verify model availability before using. As of July 2026: chat model is `gemini-3-flash-preview`, embedding model is `gemini-embedding-001`. Check https://ai.google.dev/gemini-api/docs/models for current list.
 - **Author:** AI
+
+## bug/010-upload-vercel-filesystem — 2026-07-16
+
+### Error: Logic change not reflected in documentation
+
+- **Context:** Changed upload flow from disk-based (fs.writeFile) to in-memory buffer passing, but forgot to update `.harness/skills/file-upload.md` and `.harness/specs/004-file-upload.md` which still described the old disk-based approach
+- **Cause:** Focused only on code changes without scanning for corresponding documentation that describes the affected logic
+- **Fix:** Updated both files: skill rule changed to "pass buffer in memory, do NOT write to disk", spec data flow and implementation notes updated to reflect in-memory processing
+- **Lesson:** When changing application logic, ALWAYS scan `.harness/skills/` and `.harness/specs/` for files that describe the affected domain. Update documentation in the same changeset — never leave docs describing old behavior. Logic changes and documentation updates are ONE atomic unit of work.
+- **Author:** AI

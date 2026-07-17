@@ -47,6 +47,7 @@
 - **Generic branch naming:** Using `feat/feature-name` without correlating numbers leads to confusion when multiple features exist. Always use `feat/XXX-description` format.
 - **Modifying master directly:** The AI must NEVER make any changes on the `master` branch. All work happens on feature/bug branches. Master is only modified via merged PRs. Rule lives in `.harness/commands/git.md` section 2 and `AGENTS.md` section 7.
 - **Creating PR without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. "Go ahead", "yes", "commit" do NOT authorize PR creation. Each git write operation (commit, push, PR) requires its own explicit authorization.
+- **Logic changes without documentation updates:** When changing application logic, ALWAYS scan `.harness/skills/` and `.harness/specs/` for files that describe the affected domain. Update documentation in the same changeset. Logic changes and documentation updates are ONE atomic unit of work.
 
 ---
 
@@ -102,6 +103,8 @@
 | feat/004 | pdfjs-dist worker fails in bundled environments             | Use `pathToFileURL(resolve(process.cwd(), "node_modules/...")).href` for worker path — works in both Turbopack and Bun tests                           | AI     |
 | feat/004 | Gemini text-embedding-004 deprecated (404)                  | Use `gemini-embedding-001` with raw REST API for `outputDimensionality` support (SDK v0.24.1 lacks it)                                                 | AI     |
 | bug/008  | Committed/pushed without explicit user authorization        | "Go!", "yes", "apply" do NOT authorize git write operations. Each action (commit, push, PR) requires separate explicit authorization.                  | AI     |
+| bug/009  | Made edits on master despite rules existing                 | BEFORE editing ANY file, run `git branch --show-current`. If `master`, create branch FIRST. Non-negotiable pre-flight check.                           | AI     |
+| bug/010  | Logic changes without documentation updates                 | When changing logic, scan `.harness/skills/` and `.harness/specs/` for affected docs. Update in same changeset.                                        | AI     |
 
 <!-- Example:
 | feat/003-schema | Missing unique constraint on email | Always add `@unique` for natural identifiers | AI |
