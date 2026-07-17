@@ -203,4 +203,12 @@ When reviewing a PR or discovering an issue the AI missed, the human should:
 - **Cause:** Focused only on code changes without scanning for corresponding documentation that describes the affected logic
 - **Fix:** Updated both files: skill rule changed to "pass buffer in memory, do NOT write to disk", spec data flow and implementation notes updated to reflect in-memory processing
 - **Lesson:** When changing application logic, ALWAYS scan `.harness/skills/` and `.harness/specs/` for files that describe the affected domain. Update documentation in the same changeset — never leave docs describing old behavior. Logic changes and documentation updates are ONE atomic unit of work.
+## bug/009-dommatrix-polyfill — 2026-07-16
+
+### Error: Made edits on master branch despite branch protection rules existing
+
+- **Context:** User requested fix for `DOMMatrix is not defined` production error. AI implemented the fix (3 file changes) directly on `master` without creating a branch first
+- **Cause:** Rules exist in `git.md` section 2 and `AGENTS.md` section 7, but the AI jumped straight to editing files after plan approval without running `git branch --show-current` first. The protocol lacks an explicit "verify branch BEFORE any file operation" step
+- **Fix:** Created `fix/pdf-upload-dommatrix-polyfill` branch, moved changes there. Master was restored to clean state
+- **Lesson:** BEFORE editing ANY file, the AI MUST run `git branch --show-current`. If the result is `master`, it MUST create a branch via `git checkout -b <branch-name>` BEFORE touching any file. This check is non-negotiable and must happen as the very first action after plan approval — not after edits are already made
 - **Author:** AI
