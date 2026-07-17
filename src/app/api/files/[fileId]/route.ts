@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import fs from "fs/promises";
 
 export async function GET(
   _request: NextRequest,
@@ -45,10 +44,6 @@ export async function DELETE(
 
     if (!file) {
       return NextResponse.json({ error: "File not found" }, { status: 404 });
-    }
-
-    if (file.filePath) {
-      await fs.unlink(file.filePath).catch(() => {});
     }
 
     await prisma.file.update({

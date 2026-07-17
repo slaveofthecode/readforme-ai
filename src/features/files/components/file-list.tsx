@@ -1,18 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Trash2 } from "lucide-react";
 import { useFileList } from "../hooks/use-file-list";
 import { useFileSelection } from "@/stores/file-selection";
 import { FileListItem } from "./file-list-item";
 import { EmptyFileList } from "./empty-file-list";
+import { DeleteConfirmDialog } from "./delete-confirm-dialog";
 
 export function FileList() {
   const { data, isLoading, isError, refetch } = useFileList();
   const { selectedFileIds, selectAll, clearAll } = useFileSelection();
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
 
   const files = data?.files ?? [];
   const readyFileIds = files
@@ -67,6 +70,16 @@ export function FileList() {
         <span className="text-xs text-muted-foreground">
           ({selectedFileIds.length} selected)
         </span>
+        {allSelected && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="ml-auto h-7 w-7 text-destructive hover:text-destructive hover:bg-destructive/10"
+            onClick={() => setBulkDeleteOpen(true)}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        )}
       </div>
       <ScrollArea className="flex-1">
         <div className="space-y-0.5">
@@ -75,6 +88,11 @@ export function FileList() {
           ))}
         </div>
       </ScrollArea>
+      <DeleteConfirmDialog
+        open={bulkDeleteOpen}
+        onOpenChange={setBulkDeleteOpen}
+        fileIds={selectedFileIds}
+      />
     </div>
   );
 }

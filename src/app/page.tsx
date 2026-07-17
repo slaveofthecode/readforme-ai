@@ -22,7 +22,7 @@ export default function Home() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border
+          fixed inset-y-0 left-0 z-50 w-84 bg-card border-r border-border
           transform transition-transform duration-200 ease-in-out
           md:relative md:translate-x-0
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}

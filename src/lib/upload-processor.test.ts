@@ -9,7 +9,6 @@ function createMockFile(overrides: Partial<File> = {}): File {
     size: 1024,
     status: "pending",
     pageCount: null,
-    filePath: null,
     errorMessage: null,
     createdAt: new Date(),
     updatedAt: new Date(),
