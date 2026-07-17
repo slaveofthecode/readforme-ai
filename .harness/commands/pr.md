@@ -47,7 +47,7 @@ pr
 - Detects the current branch name and uses it as the PR title.
 - Detects your GitHub username and sets you as assignee.
 - Opens your editor so you can write the PR description.
-- Creates the PR on GitHub targeting `master`.
+- Creates the PR on GitHub targeting `staging`.
 - Does NOT merge.
 
 ## 5. Protocol

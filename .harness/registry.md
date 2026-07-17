@@ -10,22 +10,22 @@
 
 ## Feature & Bug Registry
 
-| ID  | Type | Name                      | Branch                            | Status    | Date       |
-| --- | ---- | ------------------------- | --------------------------------- | --------- | ---------- |
-| 001 | feat | Scaffolding               | `feat/001-scaffolding`            | completed | 2025-07-10 |
-| 001 | bug  | Doc Issues                | `bug/001-doc-issues`              | completed | 2025-07-10 |
-| 002 | bug  | Harness Improvements      | `bug/002-harness-improvements`    | completed | 2026-07-13 |
-| 003 | bug  | Harness Specs             | `bug/003-harness-specs`           | completed | 2026-07-13 |
-| 004 | bug  | PR Creation Lesson        | `bug/004-pr-creation-lesson`      | completed | 2026-07-13 |
-| 005 | bug  | Hydration Fix             | `bug/005-hydration-fix`           | completed | 2026-07-13 |
-| 006 | bug  | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | completed | 2026-07-13 |
-| 002 | feat | Layout & Providers        | `feat/002-layout-providers`       | completed | 2026-07-13 |
-| 003 | feat | Database Schema           | `feat/003-database-schema`        | completed | 2026-07-13 |
-| 004 | feat | File Upload               | `feat/004-file-upload`            | completed | 2026-07-14 |
-| 005 | feat | File Management           | `feat/005-file-management`        | completed | 2026-07-14 |
-| 006 | feat | Chat UI                   | `feat/006-chat-ui`                | completed | 2026-07-15 |
-| 007 | feat | RAG Pipeline              | `feat/007-rag-pipeline`           | completed | 2026-07-15 |
-| 008 | feat | Polish & Optimization     | `feat/008-polish`                 | completed | 2026-07-15 |
+| ID  | Type | Name                      | Branch                            | Version | Status    | Date       |
+| --- | ---- | ------------------------- | --------------------------------- | ------- | --------- | ---------- |
+| 001 | feat | Scaffolding               | `feat/001-scaffolding`            | v0.1.0  | completed | 2025-07-10 |
+| 001 | bug  | Doc Issues                | `bug/001-doc-issues`              | v0.1.0  | completed | 2025-07-10 |
+| 002 | bug  | Harness Improvements      | `bug/002-harness-improvements`    | v0.1.0  | completed | 2026-07-13 |
+| 003 | bug  | Harness Specs             | `bug/003-harness-specs`           | v0.1.0  | completed | 2026-07-13 |
+| 004 | bug  | PR Creation Lesson        | `bug/004-pr-creation-lesson`      | v0.1.0  | completed | 2026-07-13 |
+| 005 | bug  | Hydration Fix             | `bug/005-hydration-fix`           | v0.1.0  | completed | 2026-07-13 |
+| 006 | bug  | Roadmap & Status Tracking | `bug/006-roadmap-status-tracking` | v0.1.0  | completed | 2026-07-13 |
+| 002 | feat | Layout & Providers        | `feat/002-layout-providers`       | v0.1.0  | completed | 2026-07-13 |
+| 003 | feat | Database Schema           | `feat/003-database-schema`        | v0.1.0  | completed | 2026-07-13 |
+| 004 | feat | File Upload               | `feat/004-file-upload`            | v0.1.0  | completed | 2026-07-14 |
+| 005 | feat | File Management           | `feat/005-file-management`        | v0.1.0  | completed | 2026-07-14 |
+| 006 | feat | Chat UI                   | `feat/006-chat-ui`                | v0.1.0  | completed | 2026-07-15 |
+| 007 | feat | RAG Pipeline              | `feat/007-rag-pipeline`           | v0.1.0  | completed | 2026-07-15 |
+| 008 | feat | Polish & Optimization     | `feat/008-polish`                 | v0.1.0  | completed | 2026-07-15 |
 
 ---
 
@@ -45,7 +45,7 @@
 - **Committing/pushing without explicit authorization:** The AI must NEVER run `git add`, `git commit`, or `git push` unless the user explicitly requests it. "Go ahead", "yes", "apply" do NOT authorize git write operations. Each action (commit, push, PR) requires separate explicit authorization. Rule lives in `.harness/commands/git.md`.
 - **Creating PRs without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. PR creation is ALWAYS user-triggered via `/pr`. Rule lives in `.harness/commands/git.md` section 2.
 - **Generic branch naming:** Using `feat/feature-name` without correlating numbers leads to confusion when multiple features exist. Always use `feat/XXX-description` format.
-- **Modifying master directly:** The AI must NEVER make any changes on the `master` branch. ALL work happens on feature/bug branches. Master is only modified via merged PRs. **BEFORE editing ANY file**, run `git branch --show-current` — if it returns `master`, create a branch FIRST. This has been violated 3 times (bug/002, bug/008, bug/009). Rule lives in `.harness/commands/git.md` section 2.
+- **Modifying staging directly:** The AI must NEVER make any changes directly on `staging`. ALL work happens on feature/bug branches created from `staging`. **BEFORE editing ANY file**, run `git branch --show-current` — if it returns `staging`, create a branch FIRST. Rule lives in `.harness/commands/git.md` section 2.
 - **Creating PR without /pr command:** The AI must NEVER create PRs unless the user explicitly types `/pr`. "Go ahead", "yes", "commit" do NOT authorize PR creation. Each git write operation (commit, push, PR) requires its own explicit authorization.
 - **Logic changes without documentation updates:** When changing application logic, ALWAYS scan `.harness/skills/` and `.harness/specs/` for files that describe the affected domain. Update documentation in the same changeset. Logic changes and documentation updates are ONE atomic unit of work.
 
@@ -57,7 +57,7 @@
 
 | Decision                                               | Rationale                                                                                                | Date       |
 | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ---------- |
-| Phase-based branching from `master`                    | Isolates each feature/bug, enables safe code review, prevents cascading failures                         | 2025-07-10 |
+| Phase-based branching from `staging`                | Isolates each feature/bug, enables safe code review, prevents cascading failures                         | 2025-07-10 |
 | SDD + TDD methodology                                  | Specifications first (SDD) prevents scope creep; tests (TDD) prevent regressions                         | 2025-07-10 |
 | Separate README.md (harness) and README_APP.md (app)   | Clear separation of concerns: harness governance vs app documentation                                    | 2025-07-10 |
 | Specs in `.harness/specs/` (not active/completed dirs) | Living documents with frontmatter status; follows industry best practices (PragSpec, Weaverse, CodeSpec) | 2026-07-13 |

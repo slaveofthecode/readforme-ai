@@ -50,7 +50,7 @@ if [ -z "$DESCRIPTION" ]; then
 fi
 
 gh pr create \
-  --base master \
+  --base staging \
   --title "$BRANCH" \
   --body "$DESCRIPTION" \
   --assignee "$USER"
