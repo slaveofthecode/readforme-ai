@@ -279,3 +279,90 @@ The harness is divided into seven modular pillars:
 - **React Components:** `PascalCase`
 - **Hooks/Utilities:** `camelCase`
 - **Styles/Assets:** `kebab-case`
+
+---
+
+## Directory Structure of `.harness/`
+
+Below is a brief explanation of each directory and file in the harness system:
+
+```text
+.harness/
+├── agents/                    # Contextual sub-agent prompt templates (architect, ui-expert, frontend, backend, tester, ai-engineer)
+├── commands/                  # Markdown files defining execution verification protocols (git, lint, typecheck, test, db, pr)
+├── skills/                    # Quality constraints and design patterns (clean code, mobile-first UI, state, database, etc.)
+├── specs/                     # Directory for specification files organized by version (e.g., v0.1.0/, v1.0.0/)
+├── lessons-learned.md         # Persistent log of discovered errors, root causes, and applied fixes
+└── registry.md                # General ledger of features, bugs, architecture decisions, and patterns
+```
+
+---
+
+## Communication Diagram of the Harness
+
+This diagram visualizes how the orchestrator processes developer instructions and interacts with sub-agents and validation scripts:
+
+```text
+┌─────────────────────────────────────────────────────────────────────┐
+│                            DEVELOPER                                │
+│                     Inputs prompt or command                        │
+└──────────────────────────────┬──────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        🧠 MAIN ORCHESTRATOR                        │
+│                            (AGENTS.md)                              │
+│                                                                     │
+│  1. Read MEMORY.md          → Understands stack, progress, and tasks│
+│  2. Read registry.md        → Learns from past architectural patterns│
+│  3. Read lessons-learned.md → Learns from past technical errors     │
+│  4. Read ROADMAP.md         → Checks feature roadmap and status     │
+│  5. Read .harness/specs/    → Pulls acceptace criteria for task     │
+│  6. Read .harness/skills/   → Pulls style and quality constraints   │
+│                                                                     │
+│  ┌───────────────────────────────────────────────────────────┐      │
+│  │             AUTHORIZATION PROTOCOLO (git.md)             │      │
+│  │  • No commits or pushes without explicit user command     │      │
+│  │  • No Pull Request creation without typing /pr            │      │
+│  └───────────────────────────────────────────────────────────┘      │
+└──────────┬──────────┬──────────┬──────────┬──────────┬──────────────┘
+           │          │          │          │          │
+           ▼          ▼          ▼          ▼          ▼
+    ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
+    │architect │ │ ui-expert│ │ frontend │ │ backend  │ │  tester  │
+    │          │ │          │ │          │ │          │ │          │
+    │ Contracts│ │ Markup   │ │ Zustand  │ │ API Rts  │ │ Tests    │
+    │ Interfaces││ CSS      │ │ TanStack │ │ Queries  │ │ Assert   │
+    └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘
+         │            │            │             │            │
+         └────────────┴────────────┴──────┬──────┴────────────┘
+                                          │
+                                          ▼
+                          ┌───────────────────────────────┐
+                          │     VERIFICATION COMMANDS     │
+                          │      (.harness/commands/)     │
+                          │                               │
+                          │  • lint        (lint.md)      │
+                          │  • typecheck   (typecheck.md) │
+                          │  • test        (test.md)      │
+                          │  • db migrations (db.md)      │
+                          │                               │
+                          │  ❌ If fails → AI fixes error │
+                          │  ✅ If passes → Proceeds      │
+                          └───────────────┬───────────────┘
+                                          │
+                                          ▼
+                          ┌───────────────────────────────┐
+                          │          GIT WORKFLOW         │
+                          │                               │
+                          │  1. git checkout staging      │
+                          │  2. git pull origin staging   │
+                          │  3. git checkout -b feat/XXX  │
+                          │  4. [Develop and verify]      │
+                          │  5. /pr → PR targeting staging│
+                          │                               │
+                          │  🚫 staging → produccion      │
+                          │     Human merges manually     │
+                          │     on GitHub UI only         │
+                          └───────────────────────────────┘
+```
