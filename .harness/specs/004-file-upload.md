@@ -35,10 +35,8 @@ Implement PDF file upload with async processing pipeline: text extraction, chunk
 ```
 Client -> POST /api/upload (PDF file)
   -> Create File record (status: processing)
-  -> Store file at uploads/{uuid}.pdf
-  -> Return file ID immediately
-  -> Background: extract -> chunk -> embed -> store
-  -> Update status to ready / error
+  -> Synchronously process: extract -> chunk -> embed -> store
+  -> Return file with status: ready (or error)
 
 Client -> polls GET /api/files/[fileId] for status
 Client -> DELETE /api/files/[fileId] to remove
@@ -102,11 +100,12 @@ FILE_TTL_HOURS=24  # Hours before auto-deletion (configurable)
 ## 4. Implementation Notes
 
 1. **PDF Processing**: Use pdfjs-dist for server-side text extraction
-2. **Chunking**: Fixed-size chunks (2000 chars) with 15% overlap (300 chars)
-3. **Embeddings**: Gemini text-embedding-004, batch max 100 texts
-4. **Rate Limits**: 30 req/min free tier, exponential backoff on 429
-5. **File Storage**: Local uploads/ directory, .gitignore'd
-6. **Cleanup**: Run hourly interval to delete expired files
+2. **Chunking**: Fixed-size chunks (4000 chars) with 10% overlap (400 chars)
+3. **Embeddings**: Gemini gemini-embedding-001, batch max 50 texts, 0.5s inter-batch delay
+4. **Rate Limits**: 2 retries with 1s base exponential backoff on 429
+5. **File Storage**: In-memory buffer passed to processor — no disk writes (Vercel serverless compatible)
+6. **Processing**: Synchronous (await) with maxDuration=60s — function stays alive during processing
+7. **Cleanup**: Run hourly interval to delete expired files
 
 ## 5. Verification
 
