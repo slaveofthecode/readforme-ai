@@ -207,7 +207,7 @@ bug/002-branch-naming     # Second bug fix: branch naming inconsistency
 **Rules:**
 
 - Always start from `staging`
-- Numbers are global (features and bugs share the same sequence OR have separate sequences — pick one and stay consistent)
+- Numbers are global (features and bugs share the same sequence)
 - Descriptions must be concise and descriptive
 - No direct commits to `staging`
 
@@ -232,7 +232,7 @@ The harness is divided into five modular pillars:
 
 - Technical gatekeepers for code stability
 - Define when and how to run verification scripts
-- Commands: `lint.md`, `type-check.md`, `test.md`, `db.md`, `pr.md`
+- Commands: `git.md`, `lint.md`, `type-check.md`, `test.md`, `db.md`, `pr.md`
 
 ### 4. Quality Standards & Constraints (`.harness/skills/`)
 
@@ -319,18 +319,21 @@ The harness is divided into five modular pillars:
 src/
 ├── app/                    # Next.js App Router (pages, layouts, API routes)
 ├── components/             # Shared global UI components (Shadcn/ui)
+│   ├── providers/          # React context providers
+│   └── ui/                 # Shadcn/ui components
 ├── features/               # Modular domain-driven features
-│   └── [feature-name]/
-│       ├── components/     # Components exclusive to this feature
-│       ├── hooks/          # Zustand stores + TanStack Query hooks
-│       └── services/       # API calls
+│   ├── chat/               # Chat interface feature
+│   ├── files/              # File management feature
+│   └── upload/             # File upload feature
 ├── stores/                 # Global Zustand stores
-├── lib/
-│   ├── prisma.ts           # Prisma client singleton
-│   ├── pdf.ts              # PDF parsing utilities
-│   ├── embeddings.ts       # Embedding generation (Gemini)
-│   └── gemini.ts           # Gemini SDK client
-└── utils/                  # Global pure utility functions
+└── lib/
+    ├── prisma.ts           # Prisma client singleton
+    ├── pdf.ts              # PDF parsing utilities
+    ├── embedding.ts        # Embedding generation (Gemini)
+    ├── gemini.ts           # Gemini SDK client
+    ├── chunker.ts          # Text chunking for RAG
+    ├── vector-search.ts    # Vector similarity search
+    └── utils.ts            # Utility functions (cn, etc.)
 ```
 
 ### Naming Conventions
