@@ -49,7 +49,7 @@ export default function Home() {
 
           {/* Footer */}
           <div className="px-6 py-4 border-t border-border">
-            <p className="text-xs text-muted-foreground">v0.1.0</p>
+            <p className="text-xs text-muted-foreground">v1.0.0</p>
           </div>
         </div>
       </aside>

@@ -77,10 +77,11 @@ bun test ./path/to/test.ts  # Specific test file
 
 Check `MEMORY.md` section "Active Tasks & Progress" to see what's pending.
 
-### Step 2: Create a branch from master
+### Step 2: Create a branch from staging
 
 ```bash
-git checkout master
+git checkout staging
+git pull origin staging
 git checkout -b feat/XXX-description
 ```
 
@@ -134,10 +135,11 @@ git push origin feat/XXX-description
 
 ## Workflow: How to Register a Bug
 
-### Step 1: Create a bug branch from master
+### Step 1: Create a bug branch from staging
 
 ```bash
-git checkout master
+git checkout staging
+git pull origin staging
 git checkout -b bug/XXX-description
 ```
 
@@ -180,7 +182,7 @@ Update `.harness/registry.md` with:
 
 ## Branch Naming Convention
 
-All branches MUST originate from `master`. The naming format is:
+All branches MUST originate from `staging`. The naming format is:
 
 ```
 type/XXX-description
@@ -204,10 +206,10 @@ bug/002-branch-naming     # Second bug fix: branch naming inconsistency
 
 **Rules:**
 
-- Always start from `master`
+- Always start from `staging`
 - Numbers are global (features and bugs share the same sequence OR have separate sequences — pick one and stay consistent)
 - Descriptions must be concise and descriptive
-- No direct commits to `master`
+- No direct commits to `staging`
 
 ---
 
