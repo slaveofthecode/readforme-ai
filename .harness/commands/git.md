@@ -13,12 +13,14 @@ The `master` branch is **sacred and untouchable**. The AI is **ABSOLUTELY FORBID
 
 **Protocol:**
 
-1. ALWAYS create a branch before making any changes
+1. **PRE-FLIGHT CHECK (MANDATORY):** Before editing ANY file, run `git branch --show-current`. If the result is `master`, STOP and create a branch first.
 2. If the current branch is `master`, the AI MUST run `git checkout -b <branch-name>` before editing any file
 3. ALL work happens on feature/bug branches, NEVER on master
 4. Changes reach `master` ONLY through merged PRs
 
 **This applies to ALL types of changes:** features, bug fixes, harness improvements, configuration, documentation — everything.
+
+**WARNING:** This rule has been violated MULTIPLE times (bug/002, bug/008, bug/009). The AI must NEVER skip the pre-flight branch check. No exceptions.
 
 ## 3. Authorization Rules
 

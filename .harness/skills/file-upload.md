@@ -12,8 +12,8 @@
 - Create API routes at `app/api/upload/route.ts` using `POST` method.
 - Use `formidable` or the native `Request.formData()` API for file parsing.
 - Validate file type and size server-side before processing.
-- Store files in the local filesystem (during development) or S3-compatible storage (production).
-- Save file metadata (original name, size, path, upload date) to the database via Prisma.
+- Pass the file buffer in memory to the processing pipeline — do NOT write to disk (Vercel serverless has a read-only filesystem).
+- Save file metadata (original name, size, upload date) to the database via Prisma.
 
 ## 3. File Validation
 
