@@ -35,7 +35,7 @@ Implement PDF file upload with async processing pipeline: text extraction, chunk
 ```
 Client -> POST /api/upload (PDF file)
   -> Create File record (status: processing)
-  -> Store file at uploads/{uuid}.pdf
+  -> Pass buffer in memory to processUpload (no disk writes — Vercel compatible)
   -> Return file ID immediately
   -> Background: extract -> chunk -> embed -> store
   -> Update status to ready / error
@@ -105,7 +105,7 @@ FILE_TTL_HOURS=24  # Hours before auto-deletion (configurable)
 2. **Chunking**: Fixed-size chunks (2000 chars) with 15% overlap (300 chars)
 3. **Embeddings**: Gemini text-embedding-004, batch max 100 texts
 4. **Rate Limits**: 30 req/min free tier, exponential backoff on 429
-5. **File Storage**: Local uploads/ directory, .gitignore'd
+5. **File Storage**: In-memory buffer passed to processor — no disk writes (Vercel serverless compatible)
 6. **Cleanup**: Run hourly interval to delete expired files
 
 ## 5. Verification

@@ -2,11 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { processUpload } from "@/lib/upload-processor";
 import { randomUUID } from "crypto";
-import fs from "fs/promises";
-import path from "path";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const UPLOAD_DIR = path.join(process.cwd(), "uploads");
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,23 +32,17 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     const fileId = randomUUID();
-    const fileName = `${fileId}.pdf`;
-    const filePath = path.join(UPLOAD_DIR, fileName);
-
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-    await fs.writeFile(filePath, buffer);
 
     const dbFile = await prisma.file.create({
       data: {
         id: fileId,
         name: file.name,
         size: file.size,
-        filePath,
         status: "processing",
       },
     });
 
-    processUpload(fileId).catch(console.error);
+    processUpload(fileId, buffer).catch(console.error);
 
     return NextResponse.json({
       id: dbFile.id,

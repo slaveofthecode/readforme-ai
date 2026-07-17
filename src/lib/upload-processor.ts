@@ -2,9 +2,11 @@ import { prisma } from "./prisma";
 import { extractTextFromPDF } from "./pdf";
 import { chunkText } from "./chunker";
 import { generateEmbeddings } from "./embedding";
-import fs from "fs/promises";
 
-export async function processUpload(fileId: string): Promise<void> {
+export async function processUpload(
+  fileId: string,
+  buffer: Buffer,
+): Promise<void> {
   try {
     console.log(`[UploadProcessor] Starting processing for file ${fileId}`);
 
@@ -15,9 +17,6 @@ export async function processUpload(fileId: string): Promise<void> {
       where: { id: fileId },
       data: { status: "processing" },
     });
-
-    console.log(`[UploadProcessor] Reading file from ${file.filePath}`);
-    const buffer = await fs.readFile(file.filePath!);
 
     console.log(`[UploadProcessor] Extracting text from PDF`);
     const extracted = await extractTextFromPDF(buffer);
