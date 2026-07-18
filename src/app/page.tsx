@@ -22,7 +22,7 @@ export default function Home() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border
+          fixed inset-y-0 left-0 z-50 w-84 bg-card border-r border-border
           transform transition-transform duration-200 ease-in-out
           md:relative md:translate-x-0
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
@@ -49,7 +49,7 @@ export default function Home() {
 
           {/* Footer */}
           <div className="px-6 py-4 border-t border-border">
-            <p className="text-xs text-muted-foreground">v0.1.0</p>
+            <p className="text-xs text-muted-foreground">v1.0.0</p>
           </div>
         </div>
       </aside>

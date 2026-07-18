@@ -1,5 +1,4 @@
 import { prisma } from "./prisma";
-import fs from "fs/promises";
 
 const FILE_TTL_HOURS = parseInt(process.env.FILE_TTL_HOURS || "24", 10);
 
@@ -18,10 +17,6 @@ export async function cleanupExpiredFiles(): Promise<number> {
 
   for (const file of expiredFiles) {
     try {
-      if (file.filePath) {
-        await fs.unlink(file.filePath).catch(() => {});
-      }
-
       await prisma.file.update({
         where: { id: file.id },
         data: { deletedAt: new Date() },

@@ -48,3 +48,26 @@ export function useDeleteFile() {
     },
   });
 }
+
+export function useDeleteMultipleFiles() {
+  const queryClient = useQueryClient();
+  const removeFiles = useFileSelection((state) => state.removeFiles);
+  const clearAll = useFileSelection((state) => state.clearAll);
+
+  return useMutation({
+    mutationFn: async (fileIds: string[]) => {
+      const response = await fetch("/api/files/batch-delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileIds }),
+      });
+      if (!response.ok) throw new Error("Failed to delete files");
+      return response.json() as Promise<{ deleted: number }>;
+    },
+    onSuccess: (_data, fileIds) => {
+      queryClient.invalidateQueries({ queryKey: ["files"] });
+      removeFiles(fileIds);
+      clearAll();
+    },
+  });
+}

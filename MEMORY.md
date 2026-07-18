@@ -29,10 +29,10 @@
 
 ### Git Branching Strategy
 
-- `master` -> Production ready, stable code. **ABSOLUTELY NO direct commits, edits, or modifications allowed.** Changes reach master ONLY through merged PRs.
-- `feat/XXX-description` -> Feature branches (e.g., `feat/002-file-upload`). XXX is a correlating number starting from 001.
-- `bug/XXX-description` -> Bug fix branches (e.g., `bug/001-doc-issues`). XXX is a correlating number starting from 001. Includes harness improvements.
-- All branches MUST originate from `master`.
+- `staging` -> Integration branch. **ABSOLUTELY NO direct commits, edits, or modifications allowed.** All work happens on feature/bug branches created from `staging`. PRs target `staging`.
+- `feat/XXX-description` -> Feature branches (e.g., `feat/009-new-feature`). XXX is a correlating number starting from 001.
+- `bug/XXX-description` -> Bug fix branches (e.g., `bug/012-fix-something`). XXX is a correlating number starting from 001. Includes harness improvements.
+- All branches MUST originate from `staging`.
 - Branch naming is tracked in `.harness/registry.md`.
 - **Enforcement:** See `AGENTS.md` section 7 and `.harness/commands/git.md` section 2.
 
@@ -106,8 +106,8 @@ src/
 
 ### Current Session
 
-- **Active Branch:** `master` — All features complete
+- **Active Branch:** `staging` — All v1.0.0 features complete
 - **Last Task Completed:** feat/008-polish (error boundaries, toast validation, memoization, streaming cleanup)
-- **Next Task:** None — all roadmap features completed
-- **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `master` (harness improvements = `bug/`)
+- **Next Task:** None — all v1.0.0 roadmap features completed
+- **Branching Convention:** `feat/XXX-description` / `bug/XXX-description` from `staging` (harness improvements = `bug/`)
 - **Blockers:** None

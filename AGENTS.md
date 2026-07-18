@@ -61,14 +61,16 @@ When a task or milestone is successfully achieved, you MUST remind the user to u
 
 ## 7. Branch Protection Rule
 
-The `master` branch is **sacred and untouchable**. The AI is **ABSOLUTELY FORBIDDEN** from making ANY changes directly on `master` — this includes file edits, staging, commits, or any modification whatsoever.
+The `staging` branch is the integration branch. ALL work happens on feature/bug branches created from `staging`. The AI is **ABSOLUTELY FORBIDDEN** from making ANY changes directly on `staging`.
 
 **Protocol:**
 
 1. ALWAYS create a branch before making any changes: `feat/XXX-description` or `bug/XXX-description`
-2. ALL work happens on the branch, NEVER on master
-3. Changes reach `master` ONLY through merged PRs
-4. If the AI is already on `master`, it MUST create a branch first before editing any file
+2. **ALWAYS `git pull origin staging` after creating a new branch** to ensure the latest changes are synced
+3. ALL work happens on the branch, NEVER directly on `staging`
+4. PRs from feature/bug branches target `staging`
+5. If the AI is already on `staging`, it MUST create a branch first before editing any file
+6. **The AI is ABSOLUTELY FORBIDDEN from merging PRs to `staging`.** Only the human can merge feature/bug branches into `staging`, manually via GitHub UI. The AI must NEVER execute `gh pr merge` targeting `staging`.
 
 **This applies to ALL types of changes:**
 

@@ -19,7 +19,7 @@ This project follows a combination of **SDD (Specification-Driven Development)**
 1. The **architect** sub-agent is invoked first for any new feature or bug fix
 2. The architect defines:
    - TypeScript interfaces and types (no `any` allowed)
-   - Prisma schema models (tables, relations, indexes)
+   - Data models and database schemas (tables, relations, indexes)
    - File tree proposals (where new files go)
    - API contract definitions (request/response shapes)
 3. Only AFTER the specifications are defined, the implementation agents (`frontend`, `backend`, `ui-expert`) begin coding
@@ -29,7 +29,7 @@ This project follows a combination of **SDD (Specification-Driven Development)**
 
 ```text
 User: "Add file upload feature"
-  → Architect defines: UploadFile type, FileChunk interface, Prisma File model
+  → Architect defines: UploadFile type, FileChunk interface, Database schema
   → Backend implements API route following the contract
   → Frontend implements hooks following the type definitions
   → Tester writes tests against the specifications
@@ -41,20 +41,19 @@ User: "Add file upload feature"
 
 **How it's implemented:**
 
-1. The **tester** sub-agent writes unit tests using `bun:test`
+1. The **tester** sub-agent writes unit tests using the project's native test framework
 2. Tests cover:
    - Happy path (expected behavior)
    - Edge cases (empty states, null values, incorrect inputs)
    - Error handling (network failures, validation errors)
-3. Tests are executed via `bun test` before any task is considered complete
+3. Tests are executed via the project's test command before any task is considered complete
 4. If any test fails, the AI MUST fix the issue and re-run until all tests pass
 
 **Verification commands:**
 
 ```bash
-bun test                    # Run all tests
-bun test --watch            # Watch mode
-bun test ./path/to/test.ts  # Specific test file
+# Execute the project's test runner (e.g., bun test, npm test, pytest)
+<test command>
 ```
 
 ### Clean Code + SRP
@@ -77,10 +76,11 @@ bun test ./path/to/test.ts  # Specific test file
 
 Check `MEMORY.md` section "Active Tasks & Progress" to see what's pending.
 
-### Step 2: Create a branch from master
+### Step 2: Create a branch from staging
 
 ```bash
-git checkout master
+git checkout staging
+git pull origin staging
 git checkout -b feat/XXX-description
 ```
 
@@ -103,9 +103,9 @@ The appropriate sub-agents (`frontend`, `backend`, `ui-expert`) implement the co
 Run verification commands:
 
 ```bash
-bun run lint       # Code style
-bun x tsc --noEmit # Type safety
-bun test           # Unit tests
+<lint command>       # Check code style (e.g., eslint, ruff)
+<typecheck command>  # Check type safety (e.g., tsc)
+<test command>       # Run unit tests
 ```
 
 ### Step 7: Register
@@ -134,10 +134,11 @@ git push origin feat/XXX-description
 
 ## Workflow: How to Register a Bug
 
-### Step 1: Create a bug branch from master
+### Step 1: Create a bug branch from staging
 
 ```bash
-git checkout master
+git checkout staging
+git pull origin staging
 git checkout -b bug/XXX-description
 ```
 
@@ -156,9 +157,9 @@ Analyze the bug and document:
 Apply the fix and run all verification commands:
 
 ```bash
-bun run lint
-bun x tsc --noEmit
-bun test
+<lint command>
+<typecheck command>
+<test command>
 ```
 
 ### Step 4: Register in registry.md
@@ -180,7 +181,7 @@ Update `.harness/registry.md` with:
 
 ## Branch Naming Convention
 
-All branches MUST originate from `master`. The naming format is:
+All branches MUST originate from `staging`. The naming format is:
 
 ```
 type/XXX-description
@@ -204,16 +205,16 @@ bug/002-branch-naming     # Second bug fix: branch naming inconsistency
 
 **Rules:**
 
-- Always start from `master`
-- Numbers are global (features and bugs share the same sequence OR have separate sequences — pick one and stay consistent)
+- Always start from `staging`
+- Numbers are global (features and bugs share the same sequence)
 - Descriptions must be concise and descriptive
-- No direct commits to `master`
+- No direct commits to `staging`
 
 ---
 
 ## Harness Architecture
 
-The harness is divided into five modular pillars:
+The harness is divided into seven modular pillars:
 
 ### 1. Continuous Project State (`MEMORY.md`)
 
@@ -230,19 +231,19 @@ The harness is divided into five modular pillars:
 
 - Technical gatekeepers for code stability
 - Define when and how to run verification scripts
-- Commands: `lint.md`, `type-check.md`, `test.md`, `db.md`, `pr.md`
+- Commands: `git.md`, `lint.md`, `type-check.md`, `test.md`, `db.md`, `pr.md`
 
 ### 4. Quality Standards & Constraints (`.harness/skills/`)
 
 - Philosophical guardrails for the codebase
 - Define HOW code must be written (Mobile-First, Type-Safety, SRP)
-- Skills: `clean-code.md`, `atomic-ui.md`, `shadcn-ui.md`, `zustand.md`, etc.
+- Contains modular skill files outlining patterns for state, UI, database, etc.
 
 ### 5. Atomic Specialized Sub-Agents (`.harness/agents/`)
 
 - Hyper-focused contextual profiles
 - Complex tasks broken into atomic steps
-- Agents: `architect`, `ui-expert`, `frontend`, `backend`, `tester`, `ai-engineer`
+- Profiles: `architect`, `ui-expert`, `frontend`, `backend`, `tester`, `ai-engineer`
 
 ### 6. AI Learning Memory (`.harness/registry.md`)
 
@@ -250,6 +251,14 @@ The harness is divided into five modular pillars:
 - Patterns learned, anti-patterns to avoid
 - Architecture decisions and rationale
 - Environment-specific findings
+
+### 7. Feature Specifications (`.harness/specs/`)
+
+- Versioned specification files for each feature
+- Structure: `.harness/specs/<version>/<feature-id>-<feature-name>.md`
+- `TEMPLATE.md` at root defines the spec format
+- Example: `.harness/specs/v1.0.0/009-new-feature.md`
+- When creating a new spec, ALWAYS use the current version folder
 
 ---
 
@@ -264,76 +273,96 @@ The harness is divided into five modular pillars:
 
 ---
 
-## Sub-Agent Profiles
-
-| Agent           | Responsibility                                              |
-| --------------- | ----------------------------------------------------------- |
-| **architect**   | Types, interfaces, file tree, data contracts, Prisma schema |
-| **ui-expert**   | Tailwind layouts, semantic HTML, a11y, Shadcn/ui            |
-| **frontend**    | Zustand stores, TanStack Query hooks, side-effects          |
-| **backend**     | API Routes, Prisma queries, file handling, LLM integration  |
-| **tester**      | Unit tests with `bun:test`, integration tests               |
-| **ai-engineer** | RAG pipeline, embeddings, prompts, Gemini integration       |
-
----
-
-## Verification Commands
-
-| Command                   | Purpose               | When to Run                   |
-| ------------------------- | --------------------- | ----------------------------- |
-| `bun run lint`            | Check code style      | After UI changes or refactors |
-| `bun run lint:fix`        | Auto-fix style issues | When lint fails               |
-| `bun x tsc --noEmit`      | Type checking         | Before completing any task    |
-| `bun test`                | Run unit tests        | After logic/state changes     |
-| `bunx prisma migrate dev` | Create migration      | After schema changes          |
-| `bunx prisma generate`    | Regenerate client     | After migrations              |
-
----
-
-## Stack
-
-| Layer                | Technology                    |
-| -------------------- | ----------------------------- |
-| **Framework**        | Next.js (App Router)          |
-| **Runtime**          | Bun                           |
-| **Language**         | TypeScript (Strict Mode)      |
-| **Frontend**         | React                         |
-| **Styling**          | Tailwind CSS                  |
-| **UI Components**    | Shadcn/ui                     |
-| **State Management** | Zustand (UI state)            |
-| **Data Fetching**    | TanStack Query (server state) |
-| **ORM**              | Prisma                        |
-| **Database**         | PostgreSQL + pgvector         |
-| **LLM**              | Google Gemini (free tier)     |
-| **API Layer**        | Next.js API Routes (REST)     |
-| **Testing**          | Bun Test (`bun:test`)         |
-| **Linting**          | ESLint + Prettier             |
-
----
-
-## Directory Structure
-
-```text
-src/
-├── app/                    # Next.js App Router (pages, layouts, API routes)
-├── components/             # Shared global UI components (Shadcn/ui)
-├── features/               # Modular domain-driven features
-│   └── [feature-name]/
-│       ├── components/     # Components exclusive to this feature
-│       ├── hooks/          # Zustand stores + TanStack Query hooks
-│       └── services/       # API calls
-├── stores/                 # Global Zustand stores
-├── lib/
-│   ├── prisma.ts           # Prisma client singleton
-│   ├── pdf.ts              # PDF parsing utilities
-│   ├── embeddings.ts       # Embedding generation (Gemini)
-│   └── gemini.ts           # Gemini SDK client
-└── utils/                  # Global pure utility functions
-```
-
 ### Naming Conventions
 
 - **Directories:** `kebab-case`
-- **React Components:** `PascalCase.tsx`
-- **Hooks/Utilities:** `camelCase.ts`
+- **React Components:** `PascalCase`
+- **Hooks/Utilities:** `camelCase`
 - **Styles/Assets:** `kebab-case`
+
+---
+
+## Directory Structure of `.harness/`
+
+Below is a brief explanation of each directory and file in the harness system:
+
+```text
+.harness/
+├── agents/                    # Contextual sub-agent prompt templates (architect, ui-expert, frontend, backend, tester, ai-engineer)
+├── commands/                  # Markdown files defining execution verification protocols (git, lint, typecheck, test, db, pr)
+├── skills/                    # Quality constraints and design patterns (clean code, mobile-first UI, state, database, etc.)
+├── specs/                     # Directory for specification files organized by version (e.g., v0.1.0/, v1.0.0/)
+├── lessons-learned.md         # Persistent log of discovered errors, root causes, and applied fixes
+└── registry.md                # General ledger of features, bugs, architecture decisions, and patterns
+```
+
+---
+
+## Communication Diagram of the Harness
+
+This diagram visualizes how the orchestrator processes developer instructions and interacts with sub-agents and validation scripts:
+
+```text
+┌─────────────────────────────────────────────────────────────────────┐
+│                            DEVELOPER                                │
+│                     Inputs prompt or command                        │
+└──────────────────────────────┬──────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        🧠 MAIN ORCHESTRATOR                        │
+│                            (AGENTS.md)                              │
+│                                                                     │
+│  1. Read MEMORY.md          → Understands stack, progress, and tasks│
+│  2. Read registry.md        → Learns from past architectural patterns│
+│  3. Read lessons-learned.md → Learns from past technical errors     │
+│  4. Read ROADMAP.md         → Checks feature roadmap and status     │
+│  5. Read .harness/specs/    → Pulls acceptace criteria for task     │
+│  6. Read .harness/skills/   → Pulls style and quality constraints   │
+│                                                                     │
+│  ┌───────────────────────────────────────────────────────────┐      │
+│  │             AUTHORIZATION PROTOCOLO (git.md)             │      │
+│  │  • No commits or pushes without explicit user command     │      │
+│  │  • No Pull Request creation without typing /pr            │      │
+│  └───────────────────────────────────────────────────────────┘      │
+└──────────┬──────────┬──────────┬──────────┬──────────┬──────────────┘
+           │          │          │          │          │
+           ▼          ▼          ▼          ▼          ▼
+    ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
+    │architect │ │ ui-expert│ │ frontend │ │ backend  │ │  tester  │
+    │          │ │          │ │          │ │          │ │          │
+    │ Contracts│ │ Markup   │ │ Zustand  │ │ API Rts  │ │ Tests    │
+    │ Interfaces││ CSS      │ │ TanStack │ │ Queries  │ │ Assert   │
+    └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘
+         │            │            │             │            │
+         └────────────┴────────────┴──────┬──────┴────────────┘
+                                          │
+                                          ▼
+                          ┌───────────────────────────────┐
+                          │     VERIFICATION COMMANDS     │
+                          │      (.harness/commands/)     │
+                          │                               │
+                          │  • lint        (lint.md)      │
+                          │  • typecheck   (typecheck.md) │
+                          │  • test        (test.md)      │
+                          │  • db migrations (db.md)      │
+                          │                               │
+                          │  ❌ If fails → AI fixes error │
+                          │  ✅ If passes → Proceeds      │
+                          └───────────────┬───────────────┘
+                                          │
+                                          ▼
+                          ┌───────────────────────────────┐
+                          │          GIT WORKFLOW         │
+                          │                               │
+                          │  1. git checkout staging      │
+                          │  2. git pull origin staging   │
+                          │  3. git checkout -b feat/XXX  │
+                          │  4. [Develop and verify]      │
+                          │  5. /pr → PR targeting staging│
+                          │                               │
+                          │  🚫 staging → produccion      │
+                          │     Human merges manually     │
+                          │     on GitHub UI only         │
+                          └───────────────────────────────┘
+```

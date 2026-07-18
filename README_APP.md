@@ -112,7 +112,7 @@ src/
 │   │   ├── components/         # Upload UI components
 │   │   ├── hooks/              # Upload hooks
 │   │   └── services/           # Upload API calls
-│   └── documents/              # Document management
+│   └── files/                  # File management
 │       ├── components/         # Document list UI
 │       ├── hooks/              # Document hooks
 │       └── services/           # Document API calls
@@ -121,7 +121,13 @@ src/
 │   ├── prisma.ts               # Prisma singleton
 │   ├── gemini.ts               # Gemini SDK client
 │   ├── pdf.ts                  # PDF parsing utilities
-│   ├── embeddings.ts           # Embedding generation
+│   ├── embedding.ts            # Embedding generation
+│   ├── chunker.ts              # Text chunking for RAG
+│   ├── file-cleanup.ts         # Temp file cleanup
+│   ├── format.ts               # Formatting helpers
+│   ├── server-polyfills.ts     # Polyfills for Vercel edge/server runtime
+│   ├── upload-processor.ts     # Upload handler pipeline
+│   ├── vector-search.ts        # Vector similarity search helper
 │   └── utils.ts                # cn() utility
 ├── hooks/                      # Shared custom hooks
 └── utils/                      # Pure utility functions

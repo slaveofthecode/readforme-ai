@@ -12,7 +12,6 @@ model File {
   size         Int
   status       FileStatus  @default(uploading)
   pageCount    Int?
-  filePath     String?
   errorMessage String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt

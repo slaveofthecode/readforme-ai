@@ -7,16 +7,17 @@
 
 The AI is a **code generator**, not an **authorized committer**. All git write operations require **explicit, unambiguous user authorization**.
 
-## 2. Branch Protection — NEVER Modify Master
+## 2. Branch Workflow
 
-The `master` branch is **sacred and untouchable**. The AI is **ABSOLUTELY FORBIDDEN** from making ANY changes directly on `master`.
+ALL work happens on feature/bug branches created from `staging`. The harness ONLY references `staging` — `produccion` is managed manually by the human via GitHub UI.
 
 **Protocol:**
 
-1. **PRE-FLIGHT CHECK (MANDATORY):** Before editing ANY file, run `git branch --show-current`. If the result is `master`, STOP and create a branch first.
-2. If the current branch is `master`, the AI MUST run `git checkout -b <branch-name>` before editing any file
-3. ALL work happens on feature/bug branches, NEVER on master
-4. Changes reach `master` ONLY through merged PRs
+1. **PRE-FLIGHT CHECK (MANDATORY):** Before editing ANY file, run `git branch --show-current`. If the result is `staging`, STOP and create a branch first.
+2. If the current branch is `staging`, the AI MUST run `git checkout -b <branch-name>` before editing any file
+3. **ALWAYS `git pull origin staging` after creating a new branch** to ensure the latest changes are synced
+4. ALL work happens on feature/bug branches, NEVER directly on `staging`
+5. PRs from feature/bug branches target `staging`
 
 **This applies to ALL types of changes:** features, bug fixes, harness improvements, configuration, documentation — everything.
 
