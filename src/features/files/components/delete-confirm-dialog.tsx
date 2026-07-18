@@ -58,7 +58,9 @@ export function DeleteConfirmDialog({
     }
   };
 
-  const isPending = isBulk ? deleteMultipleFiles.isPending : deleteFile.isPending;
+  const isPending = isBulk
+    ? deleteMultipleFiles.isPending
+    : deleteFile.isPending;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
