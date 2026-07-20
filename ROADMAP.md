@@ -8,16 +8,16 @@
 
 ## Feature Overview
 
-| #   | Feature               | Branch                      | Status       | Depends On | Spec                                     |
-| --- | --------------------- | --------------------------- | ------------ | ---------- | ---------------------------------------- |
-| 001 | Scaffolding           | `feat/001-scaffolding`      | ✅ completed | —          | —                                        |
+| #   | Feature               | Branch                      | Status       | Depends On | Spec                                            |
+| --- | --------------------- | --------------------------- | ------------ | ---------- | ----------------------------------------------- |
+| 001 | Scaffolding           | `feat/001-scaffolding`      | ✅ completed | —          | —                                               |
 | 002 | Layout & Providers    | `feat/002-layout-providers` | ✅ completed | 001        | `.harness/specs/v0.1.0/002-layout-providers.md` |
 | 003 | Database Schema       | `feat/003-database-schema`  | ✅ completed | 002        | `.harness/specs/v0.1.0/003-database-schema.md`  |
 | 004 | File Upload           | `feat/004-file-upload`      | ✅ completed | 002, 003   | `.harness/specs/v0.1.0/004-file-upload.md`      |
 | 005 | File Management       | `feat/005-file-management`  | ✅ completed | 002, 003   | `.harness/specs/v0.1.0/005-file-management.md`  |
 | 006 | Chat UI               | `feat/006-chat-ui`          | ✅ completed | 002        | `.harness/specs/v0.1.0/006-chat-ui.md`          |
 | 007 | RAG Pipeline          | `feat/007-rag-pipeline`     | ✅ completed | 003, 006   | `.harness/specs/v0.1.0/007-rag-pipeline.md`     |
-| 008 | Polish & Optimization | `feat/008-polish`           | ✅ completed | All        | —                                        |
+| 008 | Polish & Optimization | `feat/008-polish`           | ✅ completed | All        | —                                               |
 
 ### Status Legend
 

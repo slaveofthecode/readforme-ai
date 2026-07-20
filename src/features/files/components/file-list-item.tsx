@@ -13,7 +13,10 @@ interface FileListItemProps {
   file: FileListItem;
 }
 
-const STATUS_CONFIG: Record<string, { label: string; variant: "default" | "secondary" | "destructive" }> = {
+const STATUS_CONFIG: Record<
+  string,
+  { label: string; variant: "default" | "secondary" | "destructive" }
+> = {
   processing: { label: "Processing", variant: "secondary" },
   uploading: { label: "Uploading", variant: "secondary" },
   error: { label: "Error", variant: "destructive" },
